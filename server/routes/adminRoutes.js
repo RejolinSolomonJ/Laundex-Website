@@ -76,4 +76,53 @@ router.put('/assign', [auth, checkRole(['admin'])], async (req, res) => {
     }
 });
 
+// Get Admin Stats
+router.get('/stats', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        if (user.role !== 'admin') return res.status(403).json({ msg: 'Access denied' });
+
+        const totalOrders = await Order.countDocuments();
+
+        // Calculate total revenue
+        const revenueAgg = await Order.aggregate([
+            { $group: { _id: null, total: { $sum: "$totalAmount" } } }
+        ]);
+        const totalRevenue = revenueAgg.length > 0 ? revenueAgg[0].total : 0;
+
+        // Calculate service usage
+        const serviceUsage = await Order.aggregate([
+            {
+                $lookup: {
+                    from: "services",
+                    localField: "service",
+                    foreignField: "_id",
+                    as: "serviceDetails"
+                }
+            },
+            { $unwind: "$serviceDetails" },
+            {
+                $group: {
+                    _id: "$serviceDetails.name",
+                    count: { $sum: 1 },
+                    color: { $first: "$serviceDetails.category" } // Just using category as a proxy for color for now
+                }
+            },
+            { $sort: { count: -1 } }
+        ]);
+
+        // Map categories to colors if needed, or send raw data
+        const stats = {
+            totalOrders,
+            totalRevenue,
+            serviceUsage
+        };
+
+        res.json(stats);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;

@@ -32,6 +32,7 @@ const authReducer = (state, action) => {
         case 'LOGIN_FAIL':
         case 'LOGOUT':
             localStorage.removeItem('token');
+            localStorage.removeItem('user'); // Clear user data too
             return {
                 ...state,
                 token: null,
@@ -47,6 +48,9 @@ const authReducer = (state, action) => {
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
+    // Logout
+    const logout = () => dispatch({ type: 'LOGOUT' });
+
     // Load User
     const loadUser = async () => {
         if (localStorage.token) {
@@ -56,14 +60,23 @@ export const AuthProvider = ({ children }) => {
         }
 
         try {
-            // Note: We need a route to get user data from token if we want to persist user details on refresh
-            // For now, we'll rely on the login response or implement a /me route later
-            // dispatch({ type: 'USER_LOADED', payload: res.data });
-
-            // Temporary: Just set auth to true if token exists, ideally verify with backend
             if (localStorage.token) {
-                // You should implement a /api/auth/me route to verify token and get user data
-                // For this MVP step, we might need to store user role in localstorage too or fetch it
+                // Check if token is expired (basic check)
+                const token = localStorage.token;
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    const isExpired = payload.exp * 1000 < Date.now();
+
+                    if (isExpired) {
+                        console.log('Token expired, logging out...');
+                        logout();
+                        return;
+                    }
+                } catch (e) {
+                    console.error('Error decoding token:', e);
+                    // If token is invalid, let the backend reject it or just logout
+                }
+
                 const user = JSON.parse(localStorage.getItem('user'));
                 if (user) dispatch({ type: 'USER_LOADED', payload: user });
                 else dispatch({ type: 'AUTH_ERROR' });
@@ -75,6 +88,26 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         loadUser();
+
+        // Axios Interceptor for 401 Unauthorized
+        const interceptor = axios.interceptors.response.use(
+            response => response,
+            error => {
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    // Only logout if the error is related to authentication/token
+                    // We might want to be careful not to loop if the login endpoint itself returns 401
+                    if (!error.config.url.includes('/login')) {
+                        console.log('Session expired or unauthorized, logging out...');
+                        logout();
+                    }
+                }
+                return Promise.reject(error);
+            }
+        );
+
+        return () => {
+            axios.interceptors.response.eject(interceptor);
+        };
     }, []);
 
     // Login User
@@ -97,14 +130,11 @@ export const AuthProvider = ({ children }) => {
         } catch (err) {
             dispatch({
                 type: 'LOGIN_FAIL',
-                payload: err.response.data.msg
+                payload: err.response?.data?.msg || 'Login failed'
             });
             throw err; // Re-throw to handle in component
         }
     };
-
-    // Logout
-    const logout = () => dispatch({ type: 'LOGOUT' });
 
     return (
         <AuthContext.Provider
