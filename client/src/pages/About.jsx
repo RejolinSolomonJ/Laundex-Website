@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext';
 import { Link } from 'react-router-dom';
+import { Sun, Moon, Rocket, Leaf } from 'lucide-react';
 
 const About = () => {
     const { theme, toggleTheme } = useTheme();
@@ -23,7 +24,7 @@ const About = () => {
                 </div>
                 <div className="flex items-center gap-4">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <Link to="/login" className="hidden md:block font-medium text-gray-700 dark:text-white hover:text-brand-primary transition">Login</Link>
                     <Link to="/register" className="bg-gray-900 dark:bg-white text-white dark:text-deep-900 px-6 py-2.5 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
@@ -42,8 +43,8 @@ const About = () => {
                     <div className="space-y-16">
                         <div className="flex flex-col md:flex-row items-center gap-12">
                             <div className="md:w-1/2">
-                                <div className="w-full h-64 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-3xl flex items-center justify-center text-6xl">
-                                    🚀
+                                <div className="w-full h-64 bg-gradient-to-br from-brand-primary/20 to-brand-secondary/20 rounded-3xl flex items-center justify-center text-brand-primary dark:text-brand-secondary">
+                                    <Rocket size={64} />
                                 </div>
                             </div>
                             <div className="md:w-1/2">
@@ -56,8 +57,8 @@ const About = () => {
 
                         <div className="flex flex-col md:flex-row-reverse items-center gap-12">
                             <div className="md:w-1/2">
-                                <div className="w-full h-64 bg-gradient-to-br from-blue-400/20 to-green-400/20 rounded-3xl flex items-center justify-center text-6xl">
-                                    🌱
+                                <div className="w-full h-64 bg-gradient-to-br from-blue-400/20 to-green-400/20 rounded-3xl flex items-center justify-center text-green-500">
+                                    <Leaf size={64} />
                                 </div>
                             </div>
                             <div className="md:w-1/2">

@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
+import { Sun, Moon } from 'lucide-react';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -55,8 +56,8 @@ const Register = () => {
             <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md z-10 border border-white/20 dark:border-gray-700">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600 dark:from-green-400 dark:to-blue-400">Create Account</h2>
-                    <button onClick={toggleTheme} className="text-2xl p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                    <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition text-gray-600 dark:text-gray-300">
+                        {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
                     </button>
                 </div>
 

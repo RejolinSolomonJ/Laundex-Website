@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext';
 import { Link } from 'react-router-dom';
+import { Sun, Moon, Check } from 'lucide-react';
 
 const Pricing = () => {
     const { theme, toggleTheme } = useTheme();
@@ -23,7 +24,7 @@ const Pricing = () => {
                 </div>
                 <div className="flex items-center gap-4">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <Link to="/login" className="hidden md:block font-medium text-gray-700 dark:text-white hover:text-brand-purple transition">Login</Link>
                     <Link to="/register" className="bg-gray-900 dark:bg-white text-white dark:text-deep-900 px-6 py-2.5 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
@@ -58,7 +59,7 @@ const Pricing = () => {
                             <ul className="space-y-4 mb-8 flex-1">
                                 {plan.features.map((feature, fIdx) => (
                                     <li key={fIdx} className="flex items-center gap-3 text-gray-600 dark:text-gray-300">
-                                        <span className="text-green-500 font-bold">✓</span>
+                                        <span className="text-green-500 font-bold"><Check size={20} /></span>
                                         {feature}
                                     </li>
                                 ))}

@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext';
 import { Link } from 'react-router-dom';
+import { Sun, Moon, MapPin, Phone, Mail } from 'lucide-react';
 
 const Contact = () => {
     const { theme, toggleTheme } = useTheme();
@@ -23,7 +24,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-center gap-4">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <Link to="/login" className="hidden md:block font-medium text-gray-700 dark:text-white hover:text-brand-primary transition">Login</Link>
                     <Link to="/register" className="bg-gray-900 dark:bg-white text-white dark:text-deep-900 px-6 py-2.5 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
@@ -62,21 +63,21 @@ const Contact = () => {
 
                         <div className="flex flex-col justify-center space-y-8">
                             <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl">📍</div>
+                                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl"><MapPin size={24} /></div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Visit Us</h3>
-                                    <p className="text-gray-600 dark:text-gray-400">123 Laundry Lane<br />Clean City, ST 12345</p>
+                                    <p className="text-gray-600 dark:text-gray-400">123 Laundry Lane<br />Chennai , Tamilnadu , India </p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl">📞</div>
+                                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl"><Phone size={24} /></div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Call Us</h3>
                                     <p className="text-gray-600 dark:text-gray-400">+1 (555) 123-4567</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
-                                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl">✉️</div>
+                                <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl"><Mail size={24} /></div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Email Us</h3>
                                     <p className="text-gray-600 dark:text-gray-400">support@quickwashpro.com</p>

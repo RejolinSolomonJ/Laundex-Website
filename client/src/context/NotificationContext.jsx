@@ -43,7 +43,7 @@ export const NotificationProvider = ({ children }) => {
             // For now, we'll show it in the console and maybe a special toast to prove it works
             console.log('SMS EVENT RECEIVED:', data);
             if (user && user.phone === data.to) {
-                addNotification(`📱 SMS Sent: ${data.message}`);
+                addNotification(`SMS Sent: ${data.message}`);
             }
         });
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
+import { Sun, Moon, LogOut } from 'lucide-react';
 
 const WorkerDashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -49,11 +50,14 @@ const WorkerDashboard = () => {
             <nav className="bg-white dark:bg-gray-800 shadow-sm p-4 flex justify-between items-center sticky top-0 z-10">
                 <h1 className="text-2xl font-bold text-blue-600 dark:text-blue-400">QuickWash Pro (Worker)</h1>
                 <div className="flex items-center gap-4">
-                    <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                    <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <span className="font-medium text-gray-700 dark:text-gray-200 hidden sm:block">Hello, {user?.name}</span>
-                    <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition shadow-md">Logout</button>
+                    <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition shadow-md flex items-center gap-2">
+                        <LogOut size={18} />
+                        <span>Logout</span>
+                    </button>
                 </div>
             </nav>
 

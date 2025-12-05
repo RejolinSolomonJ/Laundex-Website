@@ -127,6 +127,7 @@ export const AuthProvider = ({ children }) => {
                 type: 'LOGIN_SUCCESS',
                 payload: res.data
             });
+            return res.data;
         } catch (err) {
             dispatch({
                 type: 'LOGIN_FAIL',

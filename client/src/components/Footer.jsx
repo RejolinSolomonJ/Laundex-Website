@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Play, Smartphone, Send, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
 
 const Footer = () => {
     return (
@@ -14,14 +15,14 @@ const Footer = () => {
 
                     <div className="flex justify-center gap-4">
                         <button className="bg-black text-white px-6 py-3 rounded-xl flex items-center gap-3 hover:bg-gray-900 transition transform hover:scale-105">
-                            <div className="text-2xl">▶️</div>
+                            <div className="text-2xl"><Play fill="currentColor" size={24} /></div>
                             <div className="text-left">
                                 <div className="text-[10px] uppercase tracking-wider">Get it on</div>
                                 <div className="text-lg font-bold leading-none">Google Play</div>
                             </div>
                         </button>
                         <button className="bg-black text-white px-6 py-3 rounded-xl flex items-center gap-3 hover:bg-gray-900 transition transform hover:scale-105">
-                            <div className="text-2xl">🍎</div>
+                            <div className="text-2xl"><Smartphone size={24} /></div>
                             <div className="text-left">
                                 <div className="text-[10px] uppercase tracking-wider">Download on the</div>
                                 <div className="text-lg font-bold leading-none">App Store</div>
@@ -49,12 +50,18 @@ const Footer = () => {
                                 QuickWash Pro is dedicated to providing top-tier laundry and dry cleaning services. We prioritize quality, convenience, and customer satisfaction.
                             </p>
                             <div className="flex gap-4">
-                                {['facebook', 'instagram', 'twitter', 'youtube'].map((social) => (
-                                    <a key={social} href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
-                                        <span className="sr-only">{social}</span>
-                                        <div className="w-4 h-4 bg-current rounded-sm"></div>
-                                    </a>
-                                ))}
+                                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
+                                    <Facebook size={18} />
+                                </a>
+                                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
+                                    <Instagram size={18} />
+                                </a>
+                                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
+                                    <Twitter size={18} />
+                                </a>
+                                <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
+                                    <Youtube size={18} />
+                                </a>
                             </div>
                         </div>
 
@@ -88,8 +95,8 @@ const Footer = () => {
                                     placeholder="Email address"
                                     className="bg-gray-800 text-white px-4 py-3 rounded-l-lg focus:outline-none w-full text-sm"
                                 />
-                                <button className="bg-blue-600 px-4 py-3 rounded-r-lg hover:bg-blue-700 transition">
-                                    ➤
+                                <button className="bg-blue-600 px-4 py-3 rounded-r-lg hover:bg-blue-700 transition flex items-center justify-center">
+                                    <Send size={20} />
                                 </button>
                             </div>
                         </div>

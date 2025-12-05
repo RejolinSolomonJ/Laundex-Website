@@ -1,5 +1,6 @@
 import { useTheme } from '../context/ThemeContext';
 import { Link } from 'react-router-dom';
+import { Sun, Moon, ShoppingBasket, Shirt, Zap, Footprints, Bed, Blinds } from 'lucide-react';
 
 const Services = () => {
     const { theme, toggleTheme } = useTheme();
@@ -23,7 +24,7 @@ const Services = () => {
                 </div>
                 <div className="flex items-center gap-4">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <Link to="/login" className="hidden md:block font-medium text-gray-700 dark:text-white hover:text-brand-purple transition">Login</Link>
                     <Link to="/register" className="bg-gray-900 dark:bg-white text-white dark:text-deep-900 px-6 py-2.5 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
@@ -40,15 +41,15 @@ const Services = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[
-                        { title: 'Wash & Fold', desc: 'Perfect for your everyday laundry. We wash, dry, and fold your clothes to perfection.', icon: '🧺' },
-                        { title: 'Dry Cleaning', desc: 'Professional care for your delicate garments, suits, and dresses.', icon: '👔' },
-                        { title: 'Ironing', desc: 'Get crisp, wrinkle-free clothes ready to wear.', icon: '🔥' },
-                        { title: 'Shoe Cleaning', desc: 'Revitalize your footwear with our premium shoe cleaning service.', icon: '👟' },
-                        { title: 'Bedding & Linens', desc: 'Fresh, clean sheets and comforters for a good night\'s sleep.', icon: '🛏️' },
-                        { title: 'Curtain Cleaning', desc: 'Remove dust and allergens from your curtains and drapes.', icon: '🪟' }
+                        { title: 'Wash & Fold', desc: 'Perfect for your everyday laundry. We wash, dry, and fold your clothes to perfection.', icon: <ShoppingBasket size={48} /> },
+                        { title: 'Dry Cleaning', desc: 'Professional care for your delicate garments, suits, and dresses.', icon: <Shirt size={48} /> },
+                        { title: 'Ironing', desc: 'Get crisp, wrinkle-free clothes ready to wear.', icon: <Zap size={48} /> },
+                        { title: 'Shoe Cleaning', desc: 'Revitalize your footwear with our premium shoe cleaning service.', icon: <Footprints size={48} /> },
+                        { title: 'Bedding & Linens', desc: 'Fresh, clean sheets and comforters for a good night\'s sleep.', icon: <Bed size={48} /> },
+                        { title: 'Curtain Cleaning', desc: 'Remove dust and allergens from your curtains and drapes.', icon: <Blinds size={48} /> }
                     ].map((service, idx) => (
                         <div key={idx} className="bg-white dark:bg-deep-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition border border-gray-100 dark:border-deep-700 group hover:-translate-y-1 duration-300">
-                            <div className="text-5xl mb-6 group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
+                            <div className="text-brand-purple dark:text-brand-pink mb-6 group-hover:scale-110 transition-transform duration-300">{service.icon}</div>
                             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{service.title}</h3>
                             <p className="text-gray-600 dark:text-gray-400 leading-relaxed">{service.desc}</p>
                         </div>

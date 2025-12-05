@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import Footer from '../components/Footer';
+import {
+    Sun, Moon, Shirt, Sparkles, Clock, CreditCard, Headphones,
+    Droplets, User, Search, CheckCircle, MapPin, Heart, Truck, ChevronDown
+} from 'lucide-react';
 
 const Home = () => {
     const { theme, toggleTheme } = useTheme();
@@ -22,7 +26,7 @@ const Home = () => {
                 </div>
                 <div className="flex items-center gap-4">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
-                        {theme === 'light' ? '🌙' : '☀️'}
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
                     <Link to="/login" className="hidden md:block font-medium text-gray-700 dark:text-white hover:text-brand-primary transition">Login</Link>
                     <Link to="/register" className="bg-gray-900 dark:bg-white text-white dark:text-deep-900 px-6 py-2.5 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
@@ -71,12 +75,12 @@ const Home = () => {
                 {/* 3D Elements (CSS only representations) */}
                 <div className="hidden md:block absolute top-20 left-10 animate-float">
                     <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-gray-800 to-black border border-gray-700 shadow-2xl transform rotate-12 flex items-center justify-center">
-                        <span className="text-4xl">👕</span>
+                        <span className="text-4xl text-white"><Shirt size={40} /></span>
                     </div>
                 </div>
                 <div className="hidden md:block absolute bottom-40 right-10 animate-float animation-delay-4000">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary shadow-2xl flex items-center justify-center">
-                        <span className="text-3xl text-white">✨</span>
+                        <span className="text-3xl text-white"><Sparkles size={32} /></span>
                     </div>
                 </div>
             </header>
@@ -104,19 +108,19 @@ const Home = () => {
                             {
                                 title: 'Order Tracking',
                                 desc: 'Stay updated with real-time status notifications from pickup to delivery. Know exactly where your clothes are at all times.',
-                                icon: '⏱️',
+                                icon: <Clock size={32} />,
                                 color: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600'
                             },
                             {
                                 title: 'Secure Payments',
                                 desc: 'Experience safe and seamless transactions with our multiple secure payment options including credit cards and digital wallets.',
-                                icon: '💳',
+                                icon: <CreditCard size={32} />,
                                 color: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600'
                             },
                             {
                                 title: '24x7 Support',
                                 desc: 'Our dedicated customer support team is always available to assist you with any queries or concerns you may have.',
-                                icon: '🎧',
+                                icon: <Headphones size={32} />,
                                 color: 'bg-pink-50 dark:bg-pink-900/20 text-pink-600'
                             }
                         ].map((benefit, idx) => (
@@ -144,21 +148,47 @@ const Home = () => {
                     </div>
 
                     <div className="flex flex-col md:flex-row items-center gap-16">
-                        {/* Left Side Image */}
-                        <div className="w-full md:w-1/2 relative">
-                            <div className="absolute inset-0 bg-blue-600 rounded-full opacity-10 blur-3xl"></div>
-                            <div className="relative z-10 bg-white dark:bg-deep-900 rounded-full p-8 shadow-2xl border-8 border-white dark:border-deep-800 max-w-md mx-auto">
-                                <img
-                                    src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop"
-                                    alt="Laundry Service"
-                                    className="w-full h-full object-cover rounded-full aspect-square"
-                                />
-                                {/* Floating Icons */}
-                                <div className="absolute top-0 right-0 bg-white dark:bg-deep-800 p-3 rounded-full shadow-lg animate-bounce">
-                                    👕
+                        {/* Left Side Image - Washing Machine UI */}
+                        <div className="w-full md:w-1/2 relative flex justify-center">
+                            {/* Washing Machine Body */}
+                            <div className="relative bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-900 rounded-[3rem] p-8 shadow-2xl border-4 border-gray-300 dark:border-gray-600 w-full max-w-md aspect-[4/5] flex flex-col items-center transform hover:scale-[1.02] transition-transform duration-500">
+                                {/* Control Panel */}
+                                <div className="w-full h-20 bg-gray-200 dark:bg-gray-800 rounded-2xl mb-8 flex items-center justify-between px-6 border-b-2 border-gray-300 dark:border-gray-600 shadow-sm relative overflow-hidden">
+                                    {/* Digital Display */}
+                                    <div className="bg-black/90 rounded px-3 py-1 font-mono text-green-500 text-sm shadow-inner border border-gray-600 flex items-center gap-2">
+                                        <span className="animate-pulse">▶</span> 00:45
+                                    </div>
+                                    {/* Knobs and Buttons */}
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 border-2 border-gray-400 dark:border-gray-500 shadow-lg flex items-center justify-center transform rotate-45">
+                                            <div className="w-1 h-4 bg-gray-500 rounded-full"></div>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <div className="w-3 h-3 rounded-full bg-red-500 shadow-lg animate-pulse"></div>
+                                            <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-lg"></div>
+                                            <div className="w-3 h-3 rounded-full bg-green-500 shadow-lg"></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="absolute bottom-10 left-0 bg-white dark:bg-deep-800 p-3 rounded-full shadow-lg animate-bounce animation-delay-2000">
-                                    🧼
+
+                                {/* Drum Container */}
+                                <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-[20px] border-gray-200 dark:border-gray-600 shadow-[inset_0_0_20px_rgba(0,0,0,0.2)] flex items-center justify-center overflow-hidden bg-gray-900">
+                                    {/* Door Handle Detail */}
+                                    <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-4 h-16 bg-gray-300 dark:bg-gray-500 rounded-r-lg shadow-md"></div>
+
+                                    {/* Rotating Drum Image */}
+                                    <img
+                                        src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop"
+                                        alt="Laundry Service"
+                                        className="w-full h-full object-cover animate-tumble opacity-90 scale-110"
+                                    />
+                                    {/* Glass Reflection Overlay */}
+                                    <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/30 via-transparent to-transparent pointer-events-none shadow-[inset_0_0_30px_rgba(255,255,255,0.1)]"></div>
+                                </div>
+
+                                {/* Bottom Panel */}
+                                <div className="mt-auto w-full h-16 bg-gray-200 dark:bg-gray-800 rounded-b-2xl rounded-t-lg border-t border-gray-300 dark:border-gray-600 shadow-inner flex justify-center items-center">
+                                    <div className="w-1/2 h-2 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
                                 </div>
                             </div>
                         </div>
@@ -166,13 +196,13 @@ const Home = () => {
                         {/* Right Side Steps */}
                         <div className="w-full md:w-1/2 space-y-8">
                             {[
-                                { title: 'Sign Up', desc: 'Create an account in seconds using your email or phone number.', icon: '👤' },
-                                { title: 'Browse Laundry Services', desc: 'Choose from a variety of services like Wash & Fold, Dry Clean, or Ironing.', icon: '🔍' },
-                                { title: 'Complete Payment', desc: 'Pay securely online or choose cash on delivery.', icon: '💳' },
-                                { title: 'Your Booking is Confirmed!', desc: 'Sit back and relax. We will handle the rest.', icon: '✅' }
+                                { title: 'Sign Up', desc: 'Create an account in seconds using your email or phone number.', icon: <User size={24} /> },
+                                { title: 'Browse Laundry Services', desc: 'Choose from a variety of services like Wash & Fold, Dry Clean, or Ironing.', icon: <Search size={24} /> },
+                                { title: 'Complete Payment', desc: 'Pay securely online or choose cash on delivery.', icon: <CreditCard size={24} /> },
+                                { title: 'Your Booking is Confirmed!', desc: 'Sit back and relax. We will handle the rest.', icon: <CheckCircle size={24} /> }
                             ].map((step, idx) => (
                                 <div key={idx} className="flex gap-6 group">
-                                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white dark:bg-deep-900 shadow-md flex items-center justify-center text-xl group-hover:bg-brand-primary group-hover:text-white transition duration-300">
+                                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-white dark:bg-deep-900 shadow-md flex items-center justify-center text-xl group-hover:bg-brand-primary group-hover:text-white transition duration-300 text-blue-600 dark:text-blue-400">
                                         {step.icon}
                                     </div>
                                     <div>
@@ -207,7 +237,7 @@ const Home = () => {
                                 {/* Mockup Content */}
                                 <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
                                     <div className="h-full w-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                                        <span className="text-4xl mb-2">📍</span>
+                                        <span className="mb-2 text-gray-600"><MapPin size={40} /></span>
                                         <span className="text-xs font-bold">Map View</span>
                                     </div>
                                 </div>
@@ -222,7 +252,7 @@ const Home = () => {
                                 {/* Mockup Content */}
                                 <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
                                     <div className="h-full w-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                                        <span className="text-4xl mb-2">❤️</span>
+                                        <span className="mb-2 text-red-500"><Heart size={40} /></span>
                                         <span className="text-xs font-bold">Favorites</span>
                                     </div>
                                 </div>
@@ -237,7 +267,7 @@ const Home = () => {
                                 {/* Mockup Content */}
                                 <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
                                     <div className="h-full w-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                                        <span className="text-4xl mb-2">🚚</span>
+                                        <span className="mb-2 text-blue-600"><Truck size={40} /></span>
                                         <span className="text-xs font-bold">Live Tracking</span>
                                     </div>
                                 </div>
@@ -273,9 +303,7 @@ const Home = () => {
                                 <summary className="flex justify-between items-center p-6 cursor-pointer font-bold text-gray-800 dark:text-white list-none">
                                     <span>{item.q}</span>
                                     <span className="transition group-open:rotate-180">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                        </svg>
+                                        <ChevronDown size={20} className="text-gray-500" />
                                     </span>
                                 </summary>
                                 <div className="px-6 pb-6 text-gray-600 dark:text-gray-400 text-sm leading-relaxed animate-fade-in">

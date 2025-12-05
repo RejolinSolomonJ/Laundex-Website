@@ -3,33 +3,36 @@ import AuthContext from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 import Footer from '../components/Footer';
+import {
+    Sun, Moon, LogOut, Package, ShoppingBasket, Shirt, Zap, Sparkles,
+    Calendar, MapPin, CheckCircle, Search, X, Star
+} from 'lucide-react';
 
 const UserDashboard = () => {
     const { user, logout } = useContext(AuthContext);
     const { theme, toggleTheme } = useTheme();
-    const [activeTab, setActiveTab] = useState('services');
-    const [services, setServices] = useState([]);
     const [orders, setOrders] = useState([]);
+    const [services, setServices] = useState([]);
     const [selectedService, setSelectedService] = useState(null);
     const [bookingData, setBookingData] = useState({
         pickupDate: '',
         address: user?.address || ''
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [activeTab, setActiveTab] = useState('services');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Static Data for UI
     const testimonials = [
-        { id: 1, name: "Shane Lee", role: "Satisfied Customer", text: "Running a small business leaves me with little time for household chores. LaundryApp has simplified my laundry routine, allowing me to focus on growing my business.", image: "https://randomuser.me/api/portraits/women/44.jpg", rating: 5 },
-        { id: 2, name: "John Doe", role: "Regular User", text: "Excellent service and timely delivery. The dry cleaning quality is top-notch!", image: "https://randomuser.me/api/portraits/men/32.jpg", rating: 5 },
-        { id: 3, name: "Emily Chen", role: "Busy Mom", text: "A lifesaver for my family. The pickup and drop-off service is super convenient.", image: "https://randomuser.me/api/portraits/women/68.jpg", rating: 4 },
+        { id: 1, name: 'Jane Doe', role: 'Happy Customer', rating: 5, text: 'QuickWash Pro has transformed my laundry routine! The service is impeccable, and my clothes always come back fresh and perfectly folded. Highly recommend!', image: 'https://randomuser.me/api/portraits/women/1.jpg' },
+        { id: 2, name: 'John Smith', role: 'Busy Professional', rating: 4, text: 'As a busy professional, I barely have time for laundry. QuickWash Pro is a lifesaver. Convenient pickup and delivery, and excellent quality. A bit pricey, but worth it.', image: 'https://randomuser.me/api/portraits/men/2.jpg' },
+        { id: 3, name: 'Emily White', role: 'Student', rating: 5, text: 'Affordable and reliable! I use their service every week. My clothes are always clean, and the staff is super friendly. Best laundry service in town!', image: 'https://randomuser.me/api/portraits/women/3.jpg' },
     ];
 
     const blogs = [
-        { id: 1, title: "Revolutionize Your Laundry Routine", date: "29 Dec, 2023", image: "https://images.unsplash.com/photo-1545173168-9f1947eebb8f?q=80&w=2071&auto=format&fit=crop", category: "Laundry Service" },
-        { id: 2, title: "The Power of Convenience", date: "29 Dec, 2023", image: "https://images.unsplash.com/photo-1517677208171-0bc5e2e3b6bd?q=80&w=2070&auto=format&fit=crop", category: "Laundry Service" },
-        { id: 3, title: "The Ultimate Laundry Guide", date: "29 Dec, 2023", image: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop", category: "Tips & Tricks" },
+        { id: 1, title: '5 Tips for a Greener Laundry Routine', category: 'Eco-Friendly', date: 'Oct 26, 2023', image: 'https://images.unsplash.com/photo-1626803102220-d14212720932?q=80&w=2070&auto=format&fit=crop' },
+        { id: 2, title: 'The Ultimate Guide to Fabric Care Symbols', category: 'Laundry Hacks', date: 'Oct 19, 2023', image: 'https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop' },
+        { id: 3, title: 'Why Professional Dry Cleaning is Worth It', category: 'Expert Advice', date: 'Oct 12, 2023', image: 'https://images.unsplash.com/photo-1545670723-ec5241e50a7b?q=80&w=2070&auto=format&fit=crop' },
     ];
 
     useEffect(() => {
@@ -124,21 +127,18 @@ const UserDashboard = () => {
                         >
                             My Orders
                         </button>
-
                     </div>
 
                     <div className="flex items-center gap-4">
                         <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
-                            {theme === 'light' ? '🌙' : '☀️'}
+                            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                         </button>
                         <div className="hidden sm:block text-right">
                             <p className="text-sm font-bold text-gray-800 dark:text-white">{user?.name}</p>
                             <p className="text-xs text-gray-500 dark:text-gray-400">User</p>
                         </div>
                         <button onClick={logout} className="bg-gray-100 dark:bg-gray-700 p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900 text-gray-600 dark:text-gray-300 hover:text-red-600 transition" title="Logout">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                            </svg>
+                            <LogOut size={20} />
                         </button>
                     </div>
                 </div>
@@ -152,9 +152,7 @@ const UserDashboard = () => {
                         {/* Search & Filter */}
                         <div className="flex flex-col md:flex-row gap-4 items-center bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
                             <div className="flex-1 w-full relative">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                                <Search className="absolute left-3 top-3.5 text-gray-400" size={20} />
                                 <input
                                     type="text"
                                     placeholder="Search for services..."
@@ -203,7 +201,7 @@ const UserDashboard = () => {
                                             <div className="flex justify-between items-start mb-2">
                                                 <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 transition">{service.name}</h3>
                                                 <div className="flex items-center gap-1 text-amber-400 text-sm font-bold">
-                                                    <span>★</span> 4.8
+                                                    <Star size={16} fill="currentColor" /> 4.8
                                                 </div>
                                             </div>
                                             <p className="text-gray-500 dark:text-gray-400 text-sm mb-4 line-clamp-2">{service.description}</p>
@@ -239,7 +237,7 @@ const UserDashboard = () => {
                                             <p className="text-blue-500 text-sm mb-4">{item.role}</p>
                                             <div className="flex justify-center gap-1 text-amber-400 mb-4">
                                                 {[...Array(5)].map((_, i) => (
-                                                    <span key={i}>{i < item.rating ? '★' : '☆'}</span>
+                                                    <Star key={i} size={20} fill={i < item.rating ? "currentColor" : "none"} />
                                                 ))}
                                             </div>
                                             <p className="text-gray-600 dark:text-gray-300 italic">"{item.text}"</p>
@@ -249,7 +247,7 @@ const UserDashboard = () => {
                             </div>
                         </section>
 
-                        {/* Blog Section (Moved from separate tab) */}
+                        {/* Blog Section */}
                         <section>
                             <div className="flex justify-between items-end mb-8">
                                 <div>
@@ -287,7 +285,7 @@ const UserDashboard = () => {
                         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">My Orders</h2>
                         {orders.length === 0 ? (
                             <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-2xl border border-dashed border-gray-300 dark:border-gray-700">
-                                <div className="text-6xl mb-4">📦</div>
+                                <div className="text-6xl mb-4 flex justify-center"><Package size={64} className="text-gray-400" /></div>
                                 <p className="text-xl font-bold text-gray-700 dark:text-gray-300">No orders yet</p>
                                 <p className="text-gray-500 dark:text-gray-400 mt-2">Go to Services to book your first laundry!</p>
                                 <button
@@ -302,18 +300,18 @@ const UserDashboard = () => {
                                 {orders.map(order => (
                                     <div key={order._id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 flex flex-col md:flex-row justify-between items-center gap-6 hover:shadow-md transition">
                                         <div className="flex items-center gap-6 w-full md:w-auto">
-                                            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center text-3xl">
-                                                {order.service?.name.includes('Wash') ? '🧺' :
-                                                    order.service?.name.includes('Dry') ? '👔' :
-                                                        order.service?.name.includes('Iron') ? '🔥' : '✨'}
+                                            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/50 rounded-2xl flex items-center justify-center text-3xl text-blue-600 dark:text-blue-400">
+                                                {order.service?.name.includes('Wash') ? <ShoppingBasket size={32} /> :
+                                                    order.service?.name.includes('Dry') ? <Shirt size={32} /> :
+                                                        order.service?.name.includes('Iron') ? <Zap size={32} /> : <Sparkles size={32} />}
                                             </div>
                                             <div>
                                                 <h3 className="text-lg font-bold text-gray-900 dark:text-white">{order.service?.name}</h3>
                                                 <p className="text-sm text-gray-500 dark:text-gray-400">Order ID: #{order._id.substring(0, 8)}</p>
                                                 <div className="flex items-center gap-2 mt-2 text-xs font-medium text-gray-500 dark:text-gray-400">
-                                                    <span>📅 {new Date(order.pickupDate).toLocaleDateString()}</span>
+                                                    <span className="flex items-center gap-1"><Calendar size={14} /> {new Date(order.pickupDate).toLocaleDateString()}</span>
                                                     <span>•</span>
-                                                    <span>📍 {order.address}</span>
+                                                    <span className="flex items-center gap-1"><MapPin size={14} /> {order.address}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -346,9 +344,7 @@ const UserDashboard = () => {
                                                     <div className="w-24 text-center">
                                                         {order.paymentStatus === 'paid' ? (
                                                             <span className="text-green-600 dark:text-green-400 font-bold flex items-center justify-center gap-1">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                                                </svg>
+                                                                <CheckCircle size={20} />
                                                                 Paid
                                                             </span>
                                                         ) : (
@@ -365,11 +361,8 @@ const UserDashboard = () => {
                     </div>
                 )}
 
-
-
             </div>
 
-            {/* Footer */}
             {/* Footer */}
             <Footer />
 
@@ -381,9 +374,7 @@ const UserDashboard = () => {
                             onClick={() => setSelectedService(null)}
                             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <X size={24} />
                         </button>
 
                         <div className="text-center mb-6">
