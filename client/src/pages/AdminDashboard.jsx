@@ -5,7 +5,7 @@ import axios from 'axios';
 import AdminSidebar from '../components/AdminSidebar';
 import AdminStats from '../components/AdminStats';
 import AdminOverview from '../components/AdminOverview';
-import { Sun, Moon, LogOut } from 'lucide-react';
+import { Sun, Moon, LogOut, Menu } from 'lucide-react';
 
 const AdminDashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -16,6 +16,7 @@ const AdminDashboard = () => {
     const [workers, setWorkers] = useState([]);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -58,15 +59,20 @@ const AdminDashboard = () => {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 flex">
             {/* Sidebar */}
-            <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab} logout={logout} />
+            <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab} logout={logout} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
             {/* Main Content */}
-            <div className="flex-1 ml-64">
+            <div className="flex-1 ml-0 md:ml-64 transition-all duration-300">
                 {/* Topbar */}
                 <header className="bg-white dark:bg-gray-800 shadow-sm p-4 flex justify-between items-center sticky top-0 z-10">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white capitalize">
-                        {activeTab === 'stats' ? 'Dashboard Overview' : activeTab.replace('-', ' ')}
-                    </h2>
+                    <div className="flex items-center gap-3">
+                        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition">
+                            <Menu size={24} />
+                        </button>
+                        <h2 className="text-xl font-bold text-gray-800 dark:text-white capitalize">
+                            {activeTab === 'stats' ? 'Dashboard Overview' : activeTab.replace('-', ' ')}
+                        </h2>
+                    </div>
                     <div className="flex items-center gap-4">
                         <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
                             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}

@@ -5,7 +5,7 @@ import axios from 'axios';
 import Footer from '../components/Footer';
 import {
     Sun, Moon, LogOut, Package, ShoppingBasket, Shirt, Zap, Sparkles,
-    Calendar, MapPin, CheckCircle, Search, X, Star
+    Calendar, MapPin, CheckCircle, Search, X, Star, Menu
 } from 'lucide-react';
 
 const UserDashboard = () => {
@@ -22,6 +22,7 @@ const UserDashboard = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const testimonials = [
         { id: 1, name: 'Jane Doe', role: 'Happy Customer', rating: 5, text: 'QuickWash Pro has transformed my laundry routine! The service is impeccable, and my clothes always come back fresh and perfectly folded. Highly recommend!', image: 'https://randomuser.me/api/portraits/women/1.jpg' },
@@ -129,7 +130,7 @@ const UserDashboard = () => {
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="hidden md:flex items-center gap-4">
                         <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition">
                             {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                         </button>
@@ -137,14 +138,70 @@ const UserDashboard = () => {
                             <p className="text-sm font-bold text-gray-800 dark:text-white">{user?.name}</p>
                             <p className="text-xs text-gray-500 dark:text-gray-400">User</p>
                         </div>
+                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-600">
+                            <img
+                                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                                alt="User"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
                         <button onClick={logout} className="bg-gray-100 dark:bg-gray-700 p-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900 text-gray-600 dark:text-gray-300 hover:text-red-600 transition" title="Logout">
                             <LogOut size={20} />
                         </button>
                     </div>
+
+                    {/* Mobile Menu Button */}
+                    <div className="flex items-center gap-4 md:hidden">
+                        <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 transition">
+                            {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                        </button>
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-800 dark:text-white p-2">
+                            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
                 </div>
+
+                {/* Mobile Menu Overlay */}
+                {isMenuOpen && (
+                    <div className="md:hidden bg-white dark:bg-gray-800 border-t dark:border-gray-700 animate-fade-in px-6 py-4 shadow-lg">
+                        <div className="flex flex-col gap-4">
+                            <div className="flex items-center gap-3 pb-4 border-b dark:border-gray-700">
+                                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gray-200 dark:border-gray-600">
+                                    <img
+                                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                                        alt="User"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-gray-800 dark:text-white">{user?.name}</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">User</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => { setActiveTab('services'); setIsMenuOpen(false); }}
+                                className={`text-left py-2 font-medium transition ${activeTab === 'services' ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-gray-600 dark:text-gray-300'}`}
+                            >
+                                Services
+                            </button>
+                            <button
+                                onClick={() => { setActiveTab('orders'); setIsMenuOpen(false); }}
+                                className={`text-left py-2 font-medium transition ${activeTab === 'orders' ? 'text-blue-600 dark:text-blue-400 font-bold' : 'text-gray-600 dark:text-gray-300'}`}
+                            >
+                                My Orders
+                            </button>
+                            <button
+                                onClick={logout}
+                                className="flex items-center gap-2 text-red-500 font-medium py-2 hover:text-red-600 transition"
+                            >
+                                <LogOut size={18} /> Logout
+                            </button>
+                        </div>
+                    </div>
+                )}
             </nav>
 
-            <div className="flex-1 container mx-auto px-6 py-8">
+            <div className="flex-1 container mx-auto px-4 md:px-6 py-8">
 
                 {/* Services Tab */}
                 {activeTab === 'services' && (
@@ -192,6 +249,7 @@ const UserDashboard = () => {
                                                 src={service.image || "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop"}
                                                 alt={service.name}
                                                 className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                                                onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop"; }}
                                             />
                                             <span className="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide text-gray-800 dark:text-white">
                                                 {service.category || 'Laundry'}

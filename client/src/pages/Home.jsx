@@ -1,13 +1,15 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import Footer from '../components/Footer';
 import {
     Sun, Moon, Shirt, Sparkles, Clock, CreditCard, Headphones,
-    Droplets, User, Search, CheckCircle, MapPin, Heart, Truck, ChevronDown
+    Droplets, User, Search, CheckCircle, MapPin, Heart, Truck, ChevronDown, Menu, X
 } from 'lucide-react';
 
 const Home = () => {
     const { theme, toggleTheme } = useTheme();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
         <div className="min-h-screen bg-white dark:bg-deep-900 transition-colors duration-300 font-sans overflow-x-hidden">
@@ -17,6 +19,8 @@ const Home = () => {
                     <div className="w-8 h-8 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg flex items-center justify-center text-white font-bold text-lg">Q</div>
                     <div className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">QuickWash <span className="text-brand-primary">Pro</span></div>
                 </div>
+
+                {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-8 bg-white/50 dark:bg-deep-800/50 backdrop-blur-md px-8 py-3 rounded-full border border-gray-200 dark:border-deep-700 shadow-sm">
                     {['About', 'Services', 'Pricing', 'Contact'].map((item) => (
                         <Link key={item} to={`/${item.toLowerCase()}`} className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-primary dark:hover:text-white transition-colors">
@@ -24,19 +28,63 @@ const Home = () => {
                         </Link>
                     ))}
                 </div>
-                <div className="flex items-center gap-4">
+
+                <div className="hidden md:flex items-center gap-4">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
                         {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
                     </button>
-                    <Link to="/login" className="hidden md:block font-medium text-gray-700 dark:text-white hover:text-brand-primary transition">Login</Link>
+                    <Link to="/login" className="font-medium text-gray-700 dark:text-white hover:text-brand-primary transition">Login</Link>
                     <Link to="/register" className="bg-gray-900 dark:bg-white text-white dark:text-deep-900 px-6 py-2.5 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-lg transform hover:scale-105">
                         Launch App
                     </Link>
                 </div>
+
+                {/* Mobile Menu Button */}
+                <div className="flex items-center gap-4 md:hidden">
+                    <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-deep-800 text-gray-600 dark:text-gray-300 transition">
+                        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+                    </button>
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-800 dark:text-white p-2">
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </nav>
 
+            {/* Mobile Menu Overlay */}
+            {isMenuOpen && (
+                <div className="fixed inset-0 z-40 bg-white dark:bg-deep-900 pt-24 px-6 md:hidden animate-fade-in">
+                    <div className="flex flex-col gap-6 text-center">
+                        {['About', 'Services', 'Pricing', 'Contact'].map((item) => (
+                            <Link
+                                key={item}
+                                to={`/${item.toLowerCase()}`}
+                                className="text-xl font-medium text-gray-800 dark:text-white hover:text-brand-primary transition"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                {item}
+                            </Link>
+                        ))}
+                        <hr className="border-gray-200 dark:border-gray-700 my-2" />
+                        <Link
+                            to="/login"
+                            className="text-xl font-medium text-gray-800 dark:text-white hover:text-brand-primary transition"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            to="/register"
+                            className="bg-brand-primary text-white py-3 rounded-xl font-bold text-lg shadow-lg"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Launch App
+                        </Link>
+                    </div>
+                </div>
+            )}
+
             {/* Hero Section */}
-            <header className="container mx-auto px-6 pt-12 pb-24 md:pt-20 md:pb-32 relative">
+            <header className="container mx-auto px-6 pt-12 pb-16 md:pt-20 md:pb-32 relative">
                 <div className="flex flex-col items-center text-center z-10 relative max-w-4xl mx-auto animate-fade-in-up">
                     <div className="inline-block mb-4 px-4 py-1.5 rounded-full bg-brand-primary/10 dark:bg-brand-primary/20 border border-brand-primary/20 text-brand-primary dark:text-brand-primary font-semibold text-sm tracking-wide uppercase">
                         Premium Laundry Service
@@ -49,6 +97,15 @@ const Home = () => {
                         The easiest and most secure way to manage your laundry needs.
                         Schedule pickups, track orders, and get fresh clothes delivered to your door.
                     </p>
+
+                    <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                        <Link to="/login" className="bg-brand-primary text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition shadow-lg transform hover:scale-105 flex items-center justify-center gap-2">
+                            Book Now
+                        </Link>
+                        <Link to="/register" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition shadow-sm transform hover:scale-105 flex items-center justify-center gap-2">
+                            Sign Up
+                        </Link>
+                    </div>
 
                     {/* Search/Action Bar */}
 
@@ -164,9 +221,9 @@ const Home = () => {
                                             <div className="w-1 h-4 bg-gray-500 rounded-full"></div>
                                         </div>
                                         <div className="flex gap-2">
-                                            <div className="w-3 h-3 rounded-full bg-red-500 shadow-lg animate-pulse"></div>
-                                            <div className="w-3 h-3 rounded-full bg-yellow-500 shadow-lg"></div>
-                                            <div className="w-3 h-3 rounded-full bg-green-500 shadow-lg"></div>
+                                            <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 shadow-lg"></div>
+                                            <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 shadow-lg"></div>
+                                            <div className="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 shadow-lg"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -176,11 +233,14 @@ const Home = () => {
                                     {/* Door Handle Detail */}
                                     <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-4 h-16 bg-gray-300 dark:bg-gray-500 rounded-r-lg shadow-md"></div>
 
-                                    {/* Rotating Drum Image */}
-                                    <img
-                                        src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=2070&auto=format&fit=crop"
-                                        alt="Laundry Service"
-                                        className="w-full h-full object-cover animate-tumble opacity-90 scale-110"
+                                    {/* Rotating Drum Video */}
+                                    <video
+                                        src="/Closed_washing_machine_202512051341_rewc1.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="w-full h-full object-cover opacity-90 scale-110"
                                     />
                                     {/* Glass Reflection Overlay */}
                                     <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/30 via-transparent to-transparent pointer-events-none shadow-[inset_0_0_30px_rgba(255,255,255,0.1)]"></div>
@@ -233,13 +293,22 @@ const Home = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {/* Feature 1 */}
                         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-3xl p-8 text-center hover:border-brand-primary transition duration-300 group">
-                            <div className="h-64 bg-gray-700 rounded-2xl mb-6 overflow-hidden relative">
-                                {/* Mockup Content */}
-                                <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
-                                    <div className="h-full w-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                                        <span className="mb-2 text-gray-600"><MapPin size={40} /></span>
-                                        <span className="text-xs font-bold">Map View</span>
-                                    </div>
+                            <div className="h-64 bg-gray-700 rounded-2xl mb-6 overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
+                                {/* Map Demo UI */}
+                                <div className="absolute inset-0 bg-gray-800">
+                                    {/* Map Grid/Streets */}
+                                    <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
+                                    {/* Streets */}
+                                    <div className="absolute top-1/2 left-0 w-full h-2 bg-gray-600/50 transform -rotate-12"></div>
+                                    <div className="absolute top-0 left-1/3 w-2 h-full bg-gray-600/50 transform rotate-12"></div>
+
+                                    {/* Pins */}
+                                    <div className="absolute top-1/3 left-1/4 text-red-500 animate-bounce"><MapPin size={32} fill="currentColor" /></div>
+                                    <div className="absolute bottom-1/3 right-1/4 text-blue-500 animate-bounce animation-delay-1000"><MapPin size={32} fill="currentColor" /></div>
+
+                                    {/* User Location */}
+                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-brand-primary rounded-full border-2 border-white shadow-lg animate-pulse"></div>
+                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-brand-primary/20 rounded-full animate-ping"></div>
                                 </div>
                             </div>
                             <h3 className="text-xl font-bold mb-2">Explore Nearby Services</h3>
@@ -248,12 +317,28 @@ const Home = () => {
 
                         {/* Feature 2 */}
                         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-3xl p-8 text-center hover:border-brand-primary transition duration-300 group">
-                            <div className="h-64 bg-gray-700 rounded-2xl mb-6 overflow-hidden relative">
-                                {/* Mockup Content */}
-                                <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
-                                    <div className="h-full w-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                                        <span className="mb-2 text-red-500"><Heart size={40} /></span>
-                                        <span className="text-xs font-bold">Favorites</span>
+                            <div className="h-64 bg-gray-700 rounded-2xl mb-6 overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
+                                {/* Favorites Demo UI */}
+                                <div className="absolute inset-0 bg-gray-800 p-4 flex flex-col gap-3">
+                                    {[1, 2, 3].map((i) => (
+                                        <div key={i} className="bg-gray-700/50 p-3 rounded-xl flex items-center justify-between border border-gray-600">
+                                            <div className="flex items-center gap-3">
+                                                <div className={`w-10 h-10 rounded-lg ${i === 1 ? 'bg-blue-500/20 text-blue-400' : i === 2 ? 'bg-purple-500/20 text-purple-400' : 'bg-green-500/20 text-green-400'} flex items-center justify-center`}>
+                                                    {i === 1 ? <Shirt size={20} /> : i === 2 ? <Sparkles size={20} /> : <Clock size={20} />}
+                                                </div>
+                                                <div className="text-left">
+                                                    <div className="h-2 w-20 bg-gray-500 rounded mb-1"></div>
+                                                    <div className="h-1.5 w-12 bg-gray-600 rounded"></div>
+                                                </div>
+                                            </div>
+                                            <Heart size={20} className="text-red-500 fill-current animate-pulse" />
+                                        </div>
+                                    ))}
+                                    {/* Add Button */}
+                                    <div className="mt-auto flex justify-center">
+                                        <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-white shadow-lg">
+                                            <span className="text-xl font-bold">+</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -263,12 +348,29 @@ const Home = () => {
 
                         {/* Feature 3 */}
                         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-3xl p-8 text-center hover:border-brand-primary transition duration-300 group">
-                            <div className="h-64 bg-gray-700 rounded-2xl mb-6 overflow-hidden relative">
-                                {/* Mockup Content */}
-                                <div className="absolute inset-2 bg-white rounded-xl overflow-hidden">
-                                    <div className="h-full w-full bg-gray-100 flex flex-col items-center justify-center text-gray-400">
-                                        <span className="mb-2 text-blue-600"><Truck size={40} /></span>
-                                        <span className="text-xs font-bold">Live Tracking</span>
+                            <div className="h-64 bg-gray-700 rounded-2xl mb-6 overflow-hidden relative group-hover:scale-105 transition-transform duration-500">
+                                {/* Tracking Demo UI */}
+                                <div className="absolute inset-0 bg-gray-800 p-6 flex flex-col items-center justify-center">
+                                    <div className="relative w-full max-w-[200px]">
+                                        {/* Path */}
+                                        <div className="absolute top-1/2 left-0 w-full h-1 bg-gray-600 rounded-full -translate-y-1/2"></div>
+                                        <div className="absolute top-1/2 left-0 w-2/3 h-1 bg-brand-primary rounded-full -translate-y-1/2 animate-pulse"></div>
+
+                                        {/* Points */}
+                                        <div className="absolute top-1/2 left-0 w-4 h-4 bg-brand-primary rounded-full -translate-y-1/2 border-2 border-gray-800"></div>
+                                        <div className="absolute top-1/2 right-0 w-4 h-4 bg-gray-600 rounded-full -translate-y-1/2 border-2 border-gray-800"></div>
+
+                                        {/* Moving Truck */}
+                                        <div className="absolute top-1/2 left-2/3 -translate-y-1/2 -translate-x-1/2 text-brand-primary filter drop-shadow-lg">
+                                            <div className="animate-bounce">
+                                                <Truck size={32} fill="currentColor" />
+                                            </div>
+                                        </div>
+
+                                        {/* Status Label */}
+                                        <div className="absolute -bottom-8 left-2/3 -translate-x-1/2 bg-brand-primary/20 text-brand-primary text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap">
+                                            On the way
+                                        </div>
                                     </div>
                                 </div>
                             </div>
