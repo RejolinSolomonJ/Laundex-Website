@@ -79,10 +79,11 @@ const Footer = () => {
                         <div>
                             <h3 className="font-bold text-lg mb-6">Contact</h3>
                             <ul className="space-y-4 text-gray-400 text-sm">
-                                <li>+1 (555) 123-4567</li>
-                                <li>www.quickwashpro.com</li>
-                                <li>support@quickwashpro.com</li>
-                                <li>123 Clean Street, Laundry City, LC 12345</li>
+                                <li>+91 8667327866</li>
+                                <li>+91 7548855208</li>
+                                <li>www.quickwashpro.in</li>
+                                <li>support@quickwashpro.in</li>
+                                <li>Mevalurkuppam, Chennai, Tamilnadu, India</li>
                             </ul>
                         </div>
 

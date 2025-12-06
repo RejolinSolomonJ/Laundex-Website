@@ -66,21 +66,22 @@ const Contact = () => {
                                 <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl"><MapPin size={24} /></div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Visit Us</h3>
-                                    <p className="text-gray-600 dark:text-gray-400">123 Laundry Lane<br />Chennai , Tamilnadu , India </p>
+                                    <p className="text-gray-600 dark:text-gray-400">Mevalurkuppam <br />Chennai , Tamilnadu , India </p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
                                 <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl"><Phone size={24} /></div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Call Us</h3>
-                                    <p className="text-gray-600 dark:text-gray-400">+1 (555) 123-4567</p>
+                                    <p className="text-gray-600 dark:text-gray-400">+91 8667327886</p>
+                                    <p className="text-gray-600 dark:text-gray-400">+91 7548855208</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
                                 <div className="w-12 h-12 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xl"><Mail size={24} /></div>
                                 <div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">Email Us</h3>
-                                    <p className="text-gray-600 dark:text-gray-400">support@quickwashpro.com</p>
+                                    <p className="text-gray-600 dark:text-gray-400">support@quickwashpro.in</p>
                                 </div>
                             </div>
                         </div>

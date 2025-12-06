@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { io } from 'socket.io-client';
 import AuthContext from './AuthContext';
+import API_URL from '../config';
 
 const NotificationContext = createContext();
 
@@ -10,7 +11,7 @@ export const NotificationProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5002');
+        const newSocket = io(API_URL);
         setSocket(newSocket);
 
         return () => newSocket.close();

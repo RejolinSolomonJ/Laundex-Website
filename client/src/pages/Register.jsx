@@ -4,6 +4,7 @@ import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
+import API_URL from '../config';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ const Register = () => {
         e.preventDefault();
         try {
             const fullPhone = `${countryCode}${phone}`;
-            const res = await axios.post('http://localhost:5002/api/auth/register', { ...formData, phone: fullPhone });
+            const res = await axios.post(`${API_URL}/api/auth/register`, { ...formData, phone: fullPhone });
             navigate('/login');
             alert('Registration Successful! Please Login.');
         } catch (err) {

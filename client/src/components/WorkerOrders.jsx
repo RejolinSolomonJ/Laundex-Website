@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MoreHorizontal, Clock, MapPin, Phone, CheckCircle, AlertCircle, ArrowRight } from 'lucide-react';
+import API_URL from '../config';
 
 const WorkerOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -13,7 +14,7 @@ const WorkerOrders = () => {
     const fetchOrders = async () => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            const res = await axios.get('http://localhost:5002/api/orders/assigned', config);
+            const res = await axios.get(`${API_URL}/api/orders/assigned`, config);
             setOrders(res.data);
         } catch (err) {
             console.error(err);
@@ -25,7 +26,7 @@ const WorkerOrders = () => {
     const updateStatus = async (orderId, newStatus) => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            await axios.put(`http://localhost:5002/api/orders/${orderId}/status`, { status: newStatus }, config);
+            await axios.put(`${API_URL}/api/orders/${orderId}/status`, { status: newStatus }, config);
             fetchOrders();
         } catch (err) {
             console.error(err);

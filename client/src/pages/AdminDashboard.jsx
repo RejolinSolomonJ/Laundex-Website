@@ -6,6 +6,7 @@ import AdminSidebar from '../components/AdminSidebar';
 import AdminStats from '../components/AdminStats';
 import AdminOverview from '../components/AdminOverview';
 import { Sun, Moon, LogOut, Menu } from 'lucide-react';
+import API_URL from '../config';
 
 const AdminDashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -28,9 +29,9 @@ const AdminDashboard = () => {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
 
             const [ordersRes, usersRes, statsRes] = await Promise.all([
-                axios.get('http://localhost:5002/api/admin/orders', config),
-                axios.get('http://localhost:5002/api/admin/users', config),
-                axios.get('http://localhost:5002/api/admin/stats', config)
+                axios.get(`${API_URL}/api/admin/orders`, config),
+                axios.get(`${API_URL}/api/admin/users`, config),
+                axios.get(`${API_URL}/api/admin/stats`, config)
             ]);
 
             setOrders(ordersRes.data);
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
     const assignWorker = async (orderId, workerId) => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            await axios.put('http://localhost:5002/api/admin/assign', { orderId, workerId }, config);
+            await axios.put(`${API_URL}/api/admin/assign`, { orderId, workerId }, config);
             alert('Worker Assigned');
             fetchData();
         } catch (err) {

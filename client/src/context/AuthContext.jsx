@@ -1,5 +1,6 @@
 import { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../config';
 
 const AuthContext = createContext();
 
@@ -119,7 +120,7 @@ export const AuthProvider = ({ children }) => {
         };
 
         try {
-            const res = await axios.post('http://localhost:5002/api/auth/login', formData, config);
+            const res = await axios.post(`${API_URL}/api/auth/login`, formData, config);
 
             localStorage.setItem('user', JSON.stringify(res.data.user)); // Store user info for persistence
 

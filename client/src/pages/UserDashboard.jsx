@@ -7,6 +7,7 @@ import {
     Sun, Moon, LogOut, Package, ShoppingBasket, Shirt, Zap, Sparkles,
     Calendar, MapPin, CheckCircle, Search, X, Star, Menu
 } from 'lucide-react';
+import API_URL from '../config';
 
 const UserDashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -43,7 +44,7 @@ const UserDashboard = () => {
 
     const fetchServices = async () => {
         try {
-            const res = await axios.get('http://localhost:5002/api/services');
+            const res = await axios.get(`${API_URL}/api/services`);
             setServices(res.data);
         } catch (err) {
             console.error(err);
@@ -53,7 +54,7 @@ const UserDashboard = () => {
     const fetchOrders = async () => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            const res = await axios.get('http://localhost:5002/api/orders/my-orders', config);
+            const res = await axios.get(`${API_URL}/api/orders/my-orders`, config);
             setOrders(res.data);
         } catch (err) {
             console.error(err);
@@ -74,7 +75,7 @@ const UserDashboard = () => {
                 address: bookingData.address
             };
 
-            await axios.post('http://localhost:5002/api/orders', body, config);
+            await axios.post(`${API_URL}/api/orders`, body, config);
             alert('Order Placed Successfully!');
             setSelectedService(null);
             fetchOrders();
@@ -89,7 +90,7 @@ const UserDashboard = () => {
     const handlePayment = async (orderId) => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            await axios.post(`http://localhost:5002/api/orders/${orderId}/pay`, {}, config);
+            await axios.post(`${API_URL}/api/orders/${orderId}/pay`, {}, config);
             alert('Payment Successful!');
             fetchOrders();
         } catch (err) {

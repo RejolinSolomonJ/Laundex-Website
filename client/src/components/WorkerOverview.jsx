@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Bell, Search, MapPin, Phone, ArrowRight, MoreVertical, Flame, TrendingUp, Calendar, CheckCircle, AlertCircle, Clock, Package } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, AreaChart, Area, Tooltip } from 'recharts';
+import API_URL from '../config';
 
 const WorkerOverview = ({ user, setActiveTab }) => {
     const [stats, setStats] = useState({
@@ -21,7 +22,7 @@ const WorkerOverview = ({ user, setActiveTab }) => {
     const fetchDashboardData = async () => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            const res = await axios.get('http://localhost:5002/api/orders/assigned', config);
+            const res = await axios.get(`${API_URL}/api/orders/assigned`, config);
             const orders = res.data;
 
             // Calculate Stats
