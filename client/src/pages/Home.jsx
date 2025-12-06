@@ -17,7 +17,7 @@ const Home = () => {
             <nav className="container mx-auto p-6 flex justify-between items-center z-50 relative">
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-gradient-to-br from-brand-primary to-brand-secondary rounded-lg flex items-center justify-center text-white font-bold text-lg">Q</div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">QuickWash <span className="text-brand-primary">Pro</span></div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Laundex</div>
                 </div>
 
                 {/* Desktop Menu */}

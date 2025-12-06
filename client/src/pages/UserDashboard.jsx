@@ -26,8 +26,8 @@ const UserDashboard = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const testimonials = [
-        { id: 1, name: 'Jane Doe', role: 'Happy Customer', rating: 5, text: 'QuickWash Pro has transformed my laundry routine! The service is impeccable, and my clothes always come back fresh and perfectly folded. Highly recommend!', image: 'https://randomuser.me/api/portraits/women/1.jpg' },
-        { id: 2, name: 'John Smith', role: 'Busy Professional', rating: 4, text: 'As a busy professional, I barely have time for laundry. QuickWash Pro is a lifesaver. Convenient pickup and delivery, and excellent quality. A bit pricey, but worth it.', image: 'https://randomuser.me/api/portraits/men/2.jpg' },
+        { id: 1, name: 'Jane Doe', role: 'Happy Customer', rating: 5, text: 'Laundex has transformed my laundry routine! The service is impeccable, and my clothes always come back fresh and perfectly folded. Highly recommend!', image: 'https://randomuser.me/api/portraits/women/1.jpg' },
+        { id: 2, name: 'John Smith', role: 'Busy Professional', rating: 4, text: 'As a busy professional, I barely have time for laundry. Laundex is a lifesaver. Convenient pickup and delivery, and excellent quality. A bit pricey, but worth it.', image: 'https://randomuser.me/api/portraits/men/2.jpg' },
         { id: 3, name: 'Emily White', role: 'Student', rating: 5, text: 'Affordable and reliable! I use their service every week. My clothes are always clean, and the staff is super friendly. Best laundry service in town!', image: 'https://randomuser.me/api/portraits/women/3.jpg' },
     ];
 
@@ -112,7 +112,7 @@ const UserDashboard = () => {
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
                     <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveTab('services')}>
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">Q</div>
-                        <h1 className="text-xl font-bold text-gray-800 dark:text-white">QuickWash <span className="text-blue-600">Pro</span></h1>
+                        <h1 className="text-xl font-bold text-gray-800 dark:text-white">Laundex</h1>
                     </div>
 
                     {/* Desktop Navigation */}

@@ -47,7 +47,7 @@ const Footer = () => {
                                 <h2 className="text-2xl font-bold">Laundry</h2>
                             </div>
                             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                QuickWash Pro is dedicated to providing top-tier laundry and dry cleaning services. We prioritize quality, convenience, and customer satisfaction.
+                                Laundex is dedicated to providing top-tier laundry and dry cleaning services. We prioritize quality, convenience, and customer satisfaction.
                             </p>
                             <div className="flex gap-4">
                                 <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
@@ -104,7 +104,7 @@ const Footer = () => {
                     </div>
 
                     <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-                        <p>Copyright © 2025 QuickWash Pro. All Rights Reserved.</p>
+                        <p>Copyright © 2025 Laundex. All Rights Reserved.</p>
                         <div className="flex gap-6">
                             <a href="#" className="hover:text-white transition">User Terms & Conditions</a>
                             <a href="#" className="hover:text-white transition">Privacy Policy</a>

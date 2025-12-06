@@ -22,7 +22,7 @@ const AdminSidebar = ({ activeTab, setActiveTab, logout, isOpen, setIsOpen }) =>
             <div className={`w-64 bg-white dark:bg-gray-800 h-screen shadow-lg flex flex-col fixed left-0 top-0 z-30 transition-transform duration-300 transform 
                 ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0`}>
                 <div className="p-6 border-b dark:border-gray-700 flex justify-between items-center">
-                    <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">QuickWash Admin</h1>
+                    <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">Laundex Admin</h1>
                     <button onClick={() => setIsOpen(false)} className="md:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                         <X size={24} />
                     </button>

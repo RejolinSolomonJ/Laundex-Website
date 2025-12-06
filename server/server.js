@@ -41,7 +41,7 @@ app.use('/api/orders', require('./routes/orderRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 
 app.get('/', (req, res) => {
-    res.send('QuickWash Pro API Running');
+    res.send('Laundex API Running');
 });
 
 // Socket.io Connection
