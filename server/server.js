@@ -9,7 +9,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: process.env.CLIENT_URL || "http://localhost:5173", // Vite default port
+        origin: [
+            process.env.CLIENT_URL,
+            "https://laundex.in",
+            "https://www.laundex.in",
+            "http://localhost:5173"
+        ].filter(Boolean),
         methods: ["GET", "POST"]
     }
 });
@@ -27,10 +32,7 @@ app.use((req, res, next) => {
 });
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/quickwash', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/quickwash')
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
