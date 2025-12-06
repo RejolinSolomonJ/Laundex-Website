@@ -6,7 +6,7 @@ require('dotenv').config({ path: '../.env' });
 
 const checkDb = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/quickwash');
+        await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/laundex');
         console.log('Connected to MongoDB...');
 
         const users = await User.find({});

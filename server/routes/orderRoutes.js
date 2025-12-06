@@ -35,9 +35,9 @@ router.post('/', auth, async (req, res) => {
             if (user) {
                 await sendEmail(
                     user.email,
-                    'Order Confirmation - QuickWash Pro',
-                    `Hi ${user.name},\n\nYour order #${order._id} has been placed successfully. We will pick it up on ${new Date(pickupDate).toLocaleDateString()}.\n\nTotal Amount: $${service.price}\n\nThank you,\nQuickWash Team`,
-                    `<h1>Order Confirmation</h1><p>Hi ${user.name},</p><p>Your order <strong>#${order._id}</strong> has been placed successfully.</p><p><strong>Pickup Date:</strong> ${new Date(pickupDate).toLocaleDateString()}</p><p><strong>Total Amount:</strong> $${service.price}</p><p>Thank you,<br>QuickWash Team</p>`
+                    'Order Confirmation - Laundex',
+                    `Hi ${user.name},\n\nYour order #${order._id} has been placed successfully. We will pick it up on ${new Date(pickupDate).toLocaleDateString()}.\n\nTotal Amount: $${service.price}\n\nThank you,\nLaundex Team`,
+                    `<h1>Order Confirmation</h1><p>Hi ${user.name},</p><p>Your order <strong>#${order._id}</strong> has been placed successfully.</p><p><strong>Pickup Date:</strong> ${new Date(pickupDate).toLocaleDateString()}</p><p><strong>Total Amount:</strong> $${service.price}</p><p>Thank you,<br>Laundex Team</p>`
                 );
             }
         } catch (notifyError) {
@@ -95,9 +95,9 @@ router.put('/:id/status', auth, async (req, res) => {
                 // Email Notification
                 await sendEmail(
                     user.email,
-                    'Order Status Update - QuickWash Pro',
-                    `Hi ${user.name},\n\nYour order #${order._id} is now ${status}.\n\nThank you,\nQuickWash Team`,
-                    `<h1>Order Status Update</h1><p>Hi ${user.name},</p><p>Your order <strong>#${order._id}</strong> is now <strong>${status}</strong>.</p><p>Thank you,<br>QuickWash Team</p>`
+                    'Order Status Update - Laundex',
+                    `Hi ${user.name},\n\nYour order #${order._id} is now ${status}.\n\nThank you,\nLaundex Team`,
+                    `<h1>Order Status Update</h1><p>Hi ${user.name},</p><p>Your order <strong>#${order._id}</strong> is now <strong>${status}</strong>.</p><p>Thank you,<br>Laundex Team</p>`
                 );
             }
         } catch (notifyError) {

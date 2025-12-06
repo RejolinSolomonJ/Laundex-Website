@@ -56,7 +56,7 @@ router.put('/assign', [auth, checkRole(['admin'])], async (req, res) => {
         if (order.user && order.user.phone) {
             io.emit('sendSMS', {
                 to: order.user.phone,
-                message: `QuickWash Pro: A worker has been assigned to your order.`
+                message: `Laundex: A worker has been assigned to your order.`
             });
         }
 
@@ -65,7 +65,7 @@ router.put('/assign', [auth, checkRole(['admin'])], async (req, res) => {
         if (worker && worker.phone) {
             io.emit('sendSMS', {
                 to: worker.phone,
-                message: `QuickWash Pro: You have been assigned a new order.`
+                message: `Laundex: You have been assigned a new order.`
             });
         }
 

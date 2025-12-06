@@ -51,9 +51,9 @@ router.post('/register', async (req, res) => {
         try {
             await sendEmail(
                 email,
-                'Welcome to QuickWash Pro',
-                `Hi ${name},\n\nThank you for registering with QuickWash Pro! We are excited to have you on board.\n\nBest Regards,\nQuickWash Team`,
-                `<h1>Welcome to QuickWash Pro!</h1><p>Hi ${name},</p><p>Thank you for registering with QuickWash Pro! We are excited to have you on board.</p><p>Best Regards,<br>QuickWash Team</p>`
+                'Welcome to Laundex',
+                `Hi ${name},\n\nThank you for registering with Laundex! We are excited to have you on board.\n\nBest Regards,\nLaundex Team`,
+                `<h1>Welcome to Laundex!</h1><p>Hi ${name},</p><p>Thank you for registering with Laundex! We are excited to have you on board.</p><p>Best Regards,<br>Laundex Team</p>`
             );
         } catch (emailError) {
             console.error('Error sending welcome email:', emailError);

@@ -12,7 +12,7 @@ const Pricing = () => {
                 <div className="flex items-center gap-2">
                     <Link to="/" className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-gradient-to-br from-brand-purple to-brand-pink rounded-lg flex items-center justify-center text-white font-bold text-lg">Q</div>
-                        <div className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">QuickWash <span className="text-brand-purple">Pro</span></div>
+                        <div className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Laundex</div>
                     </Link>
                 </div>
                 <div className="hidden md:flex items-center gap-8 bg-white/50 dark:bg-deep-800/50 backdrop-blur-md px-8 py-3 rounded-full border border-gray-200 dark:border-deep-700 shadow-sm">

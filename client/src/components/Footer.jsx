@@ -81,8 +81,8 @@ const Footer = () => {
                             <ul className="space-y-4 text-gray-400 text-sm">
                                 <li>+91 8667327866</li>
                                 <li>+91 7548855208</li>
-                                <li>www.quickwashpro.in</li>
-                                <li>support@quickwashpro.in</li>
+                                <li>www.laundex.in</li>
+                                <li>support@laundex.in</li>
                                 <li>Mevalurkuppam, Chennai, Tamilnadu, India</li>
                             </ul>
                         </div>

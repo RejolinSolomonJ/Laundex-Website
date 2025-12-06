@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 });
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/quickwash')
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/laundex')
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
