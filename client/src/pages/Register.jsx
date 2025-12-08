@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import NotificationContext from '../context/NotificationContext';
 import { useTheme } from '../context/ThemeContext';
 import { Sun, Moon } from 'lucide-react';
 import API_URL from '../config';
@@ -29,6 +30,8 @@ const Register = () => {
         }
     }, [isAuthenticated, navigate]);
 
+    const { addNotification } = useContext(NotificationContext);
+
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async e => {
@@ -37,12 +40,14 @@ const Register = () => {
             const fullPhone = `${countryCode}${phone}`;
             const res = await axios.post(`${API_URL}/api/auth/register`, { ...formData, phone: fullPhone });
             navigate('/login');
-            alert('Registration Successful! Please Login.');
+            // alert('Registration Successful! Please Login.');
+            addNotification('Registration Successful! Please Login.', 'success');
         } catch (err) {
             console.error(err);
             const msg = err.response?.data?.msg || err.message || 'Registration Failed';
             setError(msg);
-            alert('Registration Error: ' + msg);
+            // alert('Registration Error: ' + msg);
+            addNotification('Registration Error: ' + msg, 'error');
         }
     };
 
@@ -99,7 +104,6 @@ const Register = () => {
                         <select name="role" value={role} onChange={onChange} className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none dark:text-white">
                             <option value="user">User</option>
                             <option value="worker">Worker</option>
-                            <option value="admin">Admin</option>
                         </select>
                     </div>
                     <div>

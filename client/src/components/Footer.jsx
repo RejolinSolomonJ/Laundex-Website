@@ -61,6 +61,7 @@ const Footer = () => {
                                 </a>
                                 <a href="#" className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition">
                                     <Youtube size={18} />
+
                                 </a>
                             </div>
                         </div>
@@ -104,10 +105,10 @@ const Footer = () => {
                     </div>
 
                     <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-                        <p>Copyright © 2025 Laundex. All Rights Reserved.</p>
+                        <p>Copyright © 2025 Laundex. All Rights Reserved. | Developed by Lin's Infotech Company Ltd.</p>
                         <div className="flex gap-6">
-                            <a href="#" className="hover:text-white transition">User Terms & Conditions</a>
-                            <a href="#" className="hover:text-white transition">Privacy Policy</a>
+                            <Link to="/terms" className="hover:text-white transition">User Terms & Conditions</Link>
+                            <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
                         </div>
                     </div>
                 </div>

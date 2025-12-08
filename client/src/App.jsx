@@ -13,6 +13,8 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
+import TermsConditions from './pages/TermsConditions';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import MouseGlow from './components/MouseGlow';
 
 import { NotificationProvider } from './context/NotificationContext';
@@ -32,6 +34,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/terms" element={<TermsConditions />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
 
               {/* Protected Routes */}
               <Route element={<PrivateRoute allowedRoles={['user']} />}>

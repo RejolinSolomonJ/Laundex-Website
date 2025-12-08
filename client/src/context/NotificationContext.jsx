@@ -55,9 +55,9 @@ export const NotificationProvider = ({ children }) => {
         };
     }, [socket, user]);
 
-    const addNotification = (msg) => {
+    const addNotification = (msg, type = 'info') => {
         const id = Date.now();
-        setNotifications(prev => [...prev, { id, msg }]);
+        setNotifications(prev => [...prev, { id, msg, type }]);
         // Auto remove after 5s
         setTimeout(() => {
             setNotifications(prev => prev.filter(n => n.id !== id));
@@ -65,12 +65,21 @@ export const NotificationProvider = ({ children }) => {
     };
 
     return (
-        <NotificationContext.Provider value={{ notifications }}>
+        <NotificationContext.Provider value={{ notifications, addNotification }}>
             {children}
             {/* Toast Container */}
-            <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
+            <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
                 {notifications.map(n => (
-                    <div key={n.id} className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg animate-slide-in">
+                    <div
+                        key={n.id}
+                        className={`
+                            px-6 py-3 rounded-lg shadow-lg animate-slide-in text-white font-medium pointer-events-auto
+                            ${n.type === 'success' ? 'bg-green-600' : ''}
+                            ${n.type === 'error' ? 'bg-red-600' : ''}
+                            ${n.type === 'info' ? 'bg-blue-600' : ''}
+                            ${!n.type ? 'bg-blue-600' : ''} 
+                        `}
+                    >
                         {n.msg}
                     </div>
                 ))}

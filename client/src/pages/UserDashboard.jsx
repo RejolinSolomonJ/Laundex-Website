@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
+import NotificationContext from '../context/NotificationContext';
 import { useTheme } from '../context/ThemeContext';
 import axios from 'axios';
 import Footer from '../components/Footer';
@@ -11,6 +12,7 @@ import API_URL from '../config';
 
 const UserDashboard = () => {
     const { user, logout } = useContext(AuthContext);
+    const { addNotification } = useContext(NotificationContext);
     const { theme, toggleTheme } = useTheme();
     const [orders, setOrders] = useState([]);
     const [services, setServices] = useState([]);
@@ -63,7 +65,7 @@ const UserDashboard = () => {
 
     const handleBooking = async (e) => {
         e.preventDefault();
-        if (!selectedService) return alert('Please select a service');
+        if (!selectedService) return addNotification('Please select a service', 'error');
         if (isSubmitting) return;
 
         setIsSubmitting(true);
@@ -76,12 +78,13 @@ const UserDashboard = () => {
             };
 
             await axios.post(`${API_URL}/api/orders`, body, config);
-            alert('Order Placed Successfully!');
+
+            addNotification('Order Placed Successfully!', 'success');
             setSelectedService(null);
             fetchOrders();
         } catch (err) {
             console.error(err);
-            alert('Booking Failed');
+            addNotification('Booking Failed', 'error');
         } finally {
             setIsSubmitting(false);
         }
@@ -91,11 +94,11 @@ const UserDashboard = () => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
             await axios.post(`${API_URL}/api/orders/${orderId}/pay`, {}, config);
-            alert('Payment Successful!');
+            addNotification('Payment Successful!', 'success');
             fetchOrders();
         } catch (err) {
             console.error(err);
-            alert('Payment Failed');
+            addNotification('Payment Failed', 'error');
         }
     };
 
