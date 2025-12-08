@@ -107,8 +107,8 @@ const Footer = () => {
                     <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
                         <p>Copyright © 2025 Laundex. All Rights Reserved. | Developed by Lin's Infotech Company Ltd.</p>
                         <div className="flex gap-6">
-                            <Link to="/terms" className="hover:text-white transition">User Terms & Conditions</Link>
-                            <Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link>
+                            <a href="#" className="hover:text-white transition">User Terms & Conditions</a>
+                            <a href="#" className="hover:text-white transition">Privacy Policy</a>
                         </div>
                     </div>
                 </div>
