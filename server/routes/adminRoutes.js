@@ -20,7 +20,7 @@ router.get('/users', [auth, checkRole(['admin'])], async (req, res) => {
 router.get('/orders', [auth, checkRole(['admin'])], async (req, res) => {
     try {
         const orders = await Order.find()
-            .populate('user', 'name')
+            .populate('user', 'name phone')
             .populate('worker', 'name')
             .populate('service', 'name price')
             .sort({ createdAt: -1 });
@@ -44,7 +44,7 @@ router.put('/assign', [auth, checkRole(['admin'])], async (req, res) => {
 
         // Return updated order with populated fields
         const updatedOrder = await Order.findById(orderId)
-            .populate('user', 'name')
+            .populate('user', 'name phone')
             .populate('worker', 'name')
             .populate('service', 'name price');
 

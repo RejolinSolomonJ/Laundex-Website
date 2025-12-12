@@ -87,6 +87,11 @@ const WorkerOrders = () => {
                                         </div>
 
                                         <h4 className="font-bold text-gray-800 dark:text-white mb-1">{order.user?.name}</h4>
+                                        {order.user?.phone && (
+                                            <div className="flex items-center gap-1 text-xs text-indigo-500 mb-2">
+                                                <Phone size={12} /> {order.user?.phone}
+                                            </div>
+                                        )}
                                         <div className="space-y-1 mb-4">
                                             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                                                 <MapPin size={12} /> <span className="truncate">{order.address}</span>

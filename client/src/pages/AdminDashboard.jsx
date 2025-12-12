@@ -112,6 +112,7 @@ const AdminDashboard = () => {
                                         <tr>
                                             <th className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">ID</th>
                                             <th className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Customer</th>
+                                            <th className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Phone</th>
                                             <th className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service</th>
                                             <th className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
                                             <th className="p-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Assigned Worker</th>
@@ -126,6 +127,7 @@ const AdminDashboard = () => {
                                                     <div className="font-medium text-gray-800 dark:text-white">{order.user?.name}</div>
                                                     <div className="text-xs text-gray-500">{order.address}</div>
                                                 </td>
+                                                <td className="p-4 text-sm text-gray-600 dark:text-gray-400">{order.user?.phone || 'N/A'}</td>
                                                 <td className="p-4 text-gray-800 dark:text-white">{order.service?.name}</td>
                                                 <td className="p-4">
                                                     <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${order.status === 'delivered' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' :

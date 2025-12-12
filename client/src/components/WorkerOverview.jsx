@@ -46,6 +46,7 @@ const WorkerOverview = ({ user, setActiveTab }) => {
                 .map((o, index) => ({
                     id: index + 1,
                     title: `${o.service?.name} - ${o.user?.name}`,
+                    phone: o.user?.phone,
                     progress: o.status === 'pending' ? 10 : o.status === 'washing' ? 50 : o.status === 'ready_for_delivery' ? 90 : 30,
                     deadline: new Date(o.pickupDate).toLocaleDateString(),
                     status: o.status
@@ -102,7 +103,12 @@ const WorkerOverview = ({ user, setActiveTab }) => {
                 <div>
                     <h1 className="text-3xl font-bold flex items-center gap-3">
                         <span className="p-2 bg-yellow-500/20 rounded-xl text-yellow-400"><Flame size={24} fill="currentColor" /></span>
-                        Good Morning, {user?.name?.split(' ')[0]}
+                        {(() => {
+                            const hour = new Date().getHours();
+                            if (hour >= 5 && hour < 12) return 'Good Morning';
+                            if (hour >= 12 && hour < 17) return 'Good Afternoon';
+                            return 'Good Evening';
+                        })()}, {user?.name?.split(' ')[0]}
                     </h1>
                     <p className="text-gray-400 text-sm mt-1 ml-14">Here's what's happening with your tasks today.</p>
                 </div>
@@ -211,6 +217,11 @@ const WorkerOverview = ({ user, setActiveTab }) => {
                                         </div>
                                         <div>
                                             <h4 className="font-bold text-gray-200 group-hover:text-white transition">{task.title}</h4>
+                                            {task.phone && (
+                                                <div className="flex items-center gap-1 text-xs text-indigo-400 mt-0.5">
+                                                    <Phone size={10} /> {task.phone}
+                                                </div>
+                                            )}
                                             <div className="flex items-center gap-3 mt-1">
                                                 <span className="text-xs text-gray-500 uppercase">{task.status.replace(/_/g, ' ')}</span>
                                                 <span className="text-xs text-orange-400 font-medium bg-orange-400/10 px-2 py-0.5 rounded-md flex items-center gap-1">

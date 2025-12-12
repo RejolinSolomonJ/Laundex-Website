@@ -32,7 +32,7 @@ const WorkerDashboard = () => {
                         <button onClick={() => setIsSidebarOpen(true)} className="text-gray-300 hover:text-white">
                             <Menu size={24} />
                         </button>
-                        <h1 className="text-lg font-bold text-white">Laundex Worker</h1>
+                        <h1 className="text-lg font-bold text-white">Laundex's Worker Dashboard</h1>
                     </div>
                     <div className="flex items-center gap-3">
                         <button onClick={toggleTheme} className="p-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600 transition">
