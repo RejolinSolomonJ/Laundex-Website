@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import Footer from '../components/Footer';
@@ -13,6 +14,11 @@ const Home = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-deep-900 transition-colors duration-300 font-sans overflow-x-hidden">
+            <Helmet>
+                <title>Laundex - Premium Laundry & Dry Cleaning | Doorstep Delivery</title>
+                <meta name="description" content="Experience the best laundry and dry cleaning service with Laundex. We offer doorstep pickup and delivery, real-time tracking, and premium care for your clothes." />
+                <link rel="canonical" href="https://laundex.com/" />
+            </Helmet>
             {/* Navbar */}
             <nav className="container mx-auto p-6 flex justify-between items-center z-50 relative">
                 <div className="flex items-center gap-2">

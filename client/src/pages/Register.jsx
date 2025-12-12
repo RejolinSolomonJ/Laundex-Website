@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
@@ -53,6 +54,11 @@ const Register = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden py-12">
+            <Helmet>
+                <title>Sign Up for Laundex - Create Your Laundry Account</title>
+                <meta name="description" content="Create a new Laundex account to get started with the best laundry service in town. Fast, secure, and convenient." />
+                <link rel="canonical" href="https://laundex.com/register" />
+            </Helmet>
             {/* Background Decoration */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
                 <div className="absolute top-10 right-10 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
@@ -61,7 +67,7 @@ const Register = () => {
 
             <div className="bg-white/80 dark:bg-gray-800/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md z-10 border border-white/20 dark:border-gray-700">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600 dark:from-green-400 dark:to-blue-400">Create Account</h2>
+                    <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600 dark:from-green-400 dark:to-blue-400">Create Account</h1>
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition text-gray-600 dark:text-gray-300">
                         {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
                     </button>

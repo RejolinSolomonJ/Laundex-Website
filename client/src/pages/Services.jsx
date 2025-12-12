@@ -1,4 +1,5 @@
 import { useTheme } from '../context/ThemeContext';
+import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Sun, Moon, ShoppingBasket, Shirt, Zap, Footprints, Bed, Blinds } from 'lucide-react';
 
@@ -7,6 +8,11 @@ const Services = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-deep-900 transition-colors duration-300 font-sans">
+            <Helmet>
+                <title>Laundex Services - Wash & Fold, Dry Cleaning, and More</title>
+                <meta name="description" content="Explore our wide range of laundry services including Wash & Fold, Dry Cleaning, Ironing, Shoe Cleaning, and more. Tailored to your needs." />
+                <link rel="canonical" href="https://laundex.com/services" />
+            </Helmet>
             {/* Navbar */}
             <nav className="container mx-auto p-6 flex justify-between items-center z-50 relative">
                 <div className="flex items-center gap-2">
