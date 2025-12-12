@@ -95,7 +95,7 @@ Create a `.env` file in backend:
 
 ## 🌐 Live Demo
 
-(Add your deployed link here)
+https://www.laundex.in/
 
 ## 🤝 Contributing
 
