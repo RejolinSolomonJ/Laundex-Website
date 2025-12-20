@@ -21,6 +21,7 @@ const UserDashboard = () => {
         pickupDate: '',
         address: user?.address || ''
     });
+    const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('services');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
@@ -48,8 +49,10 @@ const UserDashboard = () => {
         try {
             const res = await axios.get(`${API_URL}/api/services`);
             setServices(res.data);
+            setError(null);
         } catch (err) {
-            console.error(err);
+            console.error('Fetch error:', err);
+            setError(`Failed to load services from ${API_URL}. Please check your connection.`);
         }
     };
 
@@ -246,6 +249,22 @@ const UserDashboard = () => {
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {error && (
+                                    <div className="col-span-full text-center py-12 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-900">
+                                        <p className="text-red-600 dark:text-red-400 font-bold mb-2">{error}</p>
+                                        <button
+                                            onClick={fetchServices}
+                                            className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-bold hover:bg-red-700 transition"
+                                        >
+                                            Retry
+                                        </button>
+                                    </div>
+                                )}
+                                {!error && filteredServices.length === 0 && (
+                                    <div className="col-span-full text-center py-12">
+                                        <p className="text-gray-500 dark:text-gray-400">No services found.</p>
+                                    </div>
+                                )}
                                 {filteredServices.map(service => (
                                     <div key={service._id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 group">
                                         <div className="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
