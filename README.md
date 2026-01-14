@@ -1,20 +1,20 @@
-# 🚀 **Laundex -- Smart Laundry Management Web App**
+#  **Laundex -- Smart Laundry Management Web App**
 
 A modern, streamlined laundry management platform with dedicated
 dashboards for **Users**, **Workers**, and **Admins**, enabling smooth
 order handling, service tracking, payment management, and workflow
 automation.
 
-## 🌟 Badges
+##  Badges
 
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 ![Built
 With](https://img.shields.io/badge/Built%20With-React%20%7C%20Node%20%7C%20MongoDB-blue)
 
-## ✨ Features
+##  Features
 
-### 👤 User Features
+###  User Features
 
 -   Create laundry orders with pickup & drop
 -   Pay for services
@@ -22,20 +22,20 @@ With](https://img.shields.io/badge/Built%20With-React%20%7C%20Node%20%7C%20Mongo
 -   View order history
 -   Secure login & authentication (JWT)
 
-### 👷 Worker Features
+###  Worker Features
 
 -   View & accept assigned orders
 -   Update washing, drying, ironing, delivery status
 -   Manage order timelines
 
-### 🛠 Admin Features
+###  Admin Features
 
 -   Manage users, workers & service categories
 -   Assign orders
 -   Monitor system analytics
 -   Control pricing and service workflow
 
-## 🧩 Tech Stack
+##  Tech Stack
 
 ### Frontend
 
@@ -57,22 +57,22 @@ With](https://img.shields.io/badge/Built%20With-React%20%7C%20Node%20%7C%20Mongo
 -   Backend: Render
 -   Database: MongoDB Atlas
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
-### 1️⃣ Clone the repo
+### 1) Clone the repo
 
     git clone https://github.com/RejolinSolomonJ/Laundex-Website
     cd Laundex-Website
 
-### 2️⃣ Install dependencies
+### 2️) Install dependencies
 
     npm install
 
-### 3️⃣ Start development server
+### 3️) Start development server
 
     npm run dev
 
-## 🔐 Environment Variables
+##  Environment Variables
 
 Create a `.env` file in backend:
 
@@ -80,7 +80,7 @@ Create a `.env` file in backend:
     JWT_SECRET=your_secret_key
     CLIENT_URL=https://laundex.vercel.app
 
-## 📁 Project Structure
+##  Project Structure
 
     Laundex-Website/
     │── public/
@@ -93,19 +93,19 @@ Create a `.env` file in backend:
     │── package.json
     │── README.md
 
-## 🌐 Live Demo
+##  Live Demo
 
 https://www.laundex.in/
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions, issues, and feature requests are welcome!
 
-## 📝 License
+##  License
 
 This project is under the **MIT License**.
 
-## 👨‍💻 Developer
+##  Developer
 
 **Rejolin Solomon J** Founder & CEO -- Lin's Infotechs Full Stack
 Developer \| AI Solutions \| GDG Organizer
