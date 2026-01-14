@@ -1,52 +1,27 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
-// Debug: Log the email config (sanitized)
-const smtpConfig = {
-    service: process.env.SMTP_SERVICE,
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_SECURE,
-    user: process.env.SMTP_USER ? '***' : 'missing',
-    pass: process.env.SMTP_PASS ? '***' : 'missing',
-};
-console.log('SMTP Configuration:', JSON.stringify(smtpConfig, null, 2));
-
-const transportOptions = {
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
-};
-
-// Prioritize explicit Host/Port if Service is missing or empty
-if (process.env.SMTP_SERVICE) {
-    transportOptions.service = process.env.SMTP_SERVICE;
-} else {
-    transportOptions.host = process.env.SMTP_HOST;
-    transportOptions.port = process.env.SMTP_PORT;
-    transportOptions.secure = process.env.SMTP_SECURE === 'true';
-}
-
-// Force IPv4 and enable verbose logging
-transportOptions.family = 4;
-transportOptions.debug = true;
-transportOptions.logger = true;
-
-const transporter = nodemailer.createTransport(transportOptions);
+// Initialize Resend with API Key from Environment
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmail = async (to, subject, text, html) => {
     try {
-        const info = await transporter.sendMail({
-            from: process.env.SMTP_FROM, // sender address
-            to,
-            subject,
-            text,
-            html,
+        const { data, error } = await resend.emails.send({
+            from: 'Laundex <onboarding@resend.dev>', // Use default testing domain or verified domain
+            to: [to], // Resend expects an array
+            subject: subject,
+            text: text, // Plain text version
+            html: html, // HTML version
         });
-        console.log('Message sent: %s', info.messageId);
-        return info;
+
+        if (error) {
+            console.error('Resend API Error:', error);
+            throw error;
+        }
+
+        console.log('Resend Email Sent:', data);
+        return data;
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error('Error sending email with Resend:', error);
         throw error;
     }
 };
