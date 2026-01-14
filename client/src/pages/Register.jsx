@@ -23,6 +23,8 @@ const Register = () => {
     const navigate = useNavigate();
     const [error, setError] = useState('');
 
+    const [loading, setLoading] = useState(false); // Add loading state
+
     const { name, email, password, phone, role, address } = formData;
 
     useEffect(() => {
@@ -37,18 +39,23 @@ const Register = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
+        if (loading) return; // Prevent double submit
+        setLoading(true);
+        setError('');
+
         try {
             const fullPhone = `${countryCode}${phone}`;
             const res = await axios.post(`${API_URL}/api/auth/register`, { ...formData, phone: fullPhone });
-            navigate('/login');
-            // alert('Registration Successful! Please Login.');
+            // Add notification BEFORE navigation so it isn't lost if context persists (or just better UX)
             addNotification('Registration Successful! Please Login.', 'success');
+            navigate('/login');
         } catch (err) {
             console.error(err);
             const msg = err.response?.data?.msg || err.message || 'Registration Failed';
             setError(msg);
-            // alert('Registration Error: ' + msg);
             addNotification('Registration Error: ' + msg, 'error');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -116,8 +123,12 @@ const Register = () => {
                         <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-1">Address</label>
                         <input type="text" name="address" value={address} onChange={onChange} className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none dark:text-white" />
                     </div>
-                    <button type="submit" className="w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded-lg hover:opacity-90 transition duration-300 shadow-lg mt-4">
-                        Create Account
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded-lg hover:opacity-90 transition duration-300 shadow-lg mt-4 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        {loading ? 'Creating Account...' : 'Create Account'}
                     </button>
                 </form>
                 <p className="mt-4 text-center text-gray-600 dark:text-gray-400">
