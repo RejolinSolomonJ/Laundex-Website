@@ -1,15 +1,33 @@
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-    service: process.env.SMTP_SERVICE, // e.g., 'gmail'
+// Debug: Log the email config (sanitized)
+const smtpConfig = {
+    service: process.env.SMTP_SERVICE,
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+    secure: process.env.SMTP_SECURE,
+    user: process.env.SMTP_USER ? '***' : 'missing',
+    pass: process.env.SMTP_PASS ? '***' : 'missing',
+};
+console.log('SMTP Configuration:', JSON.stringify(smtpConfig, null, 2));
+
+const transportOptions = {
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
     },
-});
+};
+
+// Prioritize explicit Host/Port if Service is missing or empty
+if (process.env.SMTP_SERVICE) {
+    transportOptions.service = process.env.SMTP_SERVICE;
+} else {
+    transportOptions.host = process.env.SMTP_HOST;
+    transportOptions.port = process.env.SMTP_PORT;
+    transportOptions.secure = process.env.SMTP_SECURE === 'true';
+}
+
+const transporter = nodemailer.createTransport(transportOptions);
 
 const sendEmail = async (to, subject, text, html) => {
     try {
