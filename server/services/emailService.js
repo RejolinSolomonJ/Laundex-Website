@@ -6,8 +6,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const sendEmail = async (to, subject, text, html) => {
     try {
         const { data, error } = await resend.emails.send({
-            from: 'Laundex <onboarding@resend.dev>', // Use default testing domain or verified domain
-            to: [to], // Resend expects an array
+            from: 'Laundex <noreply@laundex.in>', // Verified Domain
+            to: [to],
             subject: subject,
             text: text, // Plain text version
             html: html, // HTML version
