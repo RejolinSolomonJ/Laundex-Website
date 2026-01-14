@@ -25,7 +25,15 @@ if (process.env.SMTP_SERVICE) {
     transportOptions.host = process.env.SMTP_HOST;
     transportOptions.port = process.env.SMTP_PORT;
     transportOptions.secure = process.env.SMTP_SECURE === 'true';
+    transportOptions.tls = {
+        ciphers: 'SSLv3' // Sometimes helps with handshake
+    };
 }
+
+// Force IPv4 and enable verbose logging
+transportOptions.family = 4;
+transportOptions.debug = true;
+transportOptions.logger = true;
 
 const transporter = nodemailer.createTransport(transportOptions);
 
