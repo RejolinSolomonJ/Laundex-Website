@@ -138,6 +138,33 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Google Login
+    const googleLogin = async (token) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        try {
+            const res = await axios.post(`${API_URL}/api/auth/google`, { token }, config);
+
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: 'LOGIN_FAIL',
+                payload: err.response?.data?.msg || 'Google Login failed'
+            });
+            throw err;
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -146,6 +173,7 @@ export const AuthProvider = ({ children }) => {
                 loading: state.loading,
                 user: state.user,
                 login,
+                googleLogin,
                 logout
             }}
         >
