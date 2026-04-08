@@ -1,5 +1,4 @@
 import { useTheme } from '../context/ThemeContext';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Sun, Moon, Check } from 'lucide-react';
 
@@ -8,11 +7,7 @@ const Pricing = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-deep-900 transition-colors duration-300 font-sans">
-            <Helmet>
-                <title>Laundex Pricing - Affordable Laundry Plans</title>
-                <meta name="description" content="Transparent pricing for wash & fold, dry cleaning, and more. Choose from pay-as-you-go or premium subscription plans." />
-                <link rel="canonical" href="https://laundex.com/pricing" />
-            </Helmet>
+            <title>Laundex Pricing - Affordable Laundry Plans</title>
             {/* Navbar */}
             <nav className="container mx-auto p-6 flex justify-between items-center z-50 relative">
                 <div className="flex items-center gap-2">

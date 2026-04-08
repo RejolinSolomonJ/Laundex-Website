@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
@@ -82,11 +81,7 @@ const Register = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden py-12">
-            <Helmet>
-                <title>Sign Up for Laundex - Create Your Laundry Account</title>
-                <meta name="description" content="Create a new Laundex account to get started with the best laundry service in town. Fast, secure, and convenient." />
-                <link rel="canonical" href="https://laundex.com/register" />
-            </Helmet>
+            <title>Sign Up for Laundex - Create Your Laundry Account</title>
             {/* Background Decoration */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
                 <div className="absolute top-10 right-10 w-72 h-72 bg-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>

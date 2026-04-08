@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -49,11 +48,7 @@ const Login = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
-            <Helmet>
-                <title>Login to Laundex - Manage Your Laundry Orders</title>
-                <meta name="description" content="Sign in to your Laundex account to schedule pickups, track orders, and manage your laundry preferences." />
-                <link rel="canonical" href="https://laundex.com/login" />
-            </Helmet>
+            <title>Login to Laundex - Manage Your Laundry Orders</title>
             {/* Background Decorations */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 rounded-full blur-[100px] animate-blob"></div>

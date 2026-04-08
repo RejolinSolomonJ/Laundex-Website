@@ -1,5 +1,4 @@
 import { useTheme } from '../context/ThemeContext';
-import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Sun, Moon, MapPin, Phone, Mail } from 'lucide-react';
 
@@ -8,11 +7,7 @@ const Contact = () => {
 
     return (
         <div className="min-h-screen bg-white dark:bg-deep-900 transition-colors duration-300 font-sans">
-            <Helmet>
-                <title>Contact Laundex - Get in Touch</title>
-                <meta name="description" content="Have questions? Contact our laundry support team. Visit us in Chennai or call/email us for assistance." />
-                <link rel="canonical" href="https://laundex.com/contact" />
-            </Helmet>
+            <title>Contact Laundex - Get in Touch</title>
             {/* Navbar */}
             <nav className="container mx-auto p-6 flex justify-between items-center z-50 relative">
                 <div className="flex items-center gap-2">
