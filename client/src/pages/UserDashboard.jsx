@@ -98,13 +98,26 @@ const UserDashboard = () => {
     };
 
     const handlePayment = async (orderId) => {
+        console.log('--- Starting Payment Process ---');
+        console.log('Order ID:', orderId);
+        console.log('RAZORPAY_KEY_ID Status:', RAZORPAY_KEY_ID ? 'Exists' : 'MISSING');
+
         try {
-            const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No Auth Token found');
+                return addNotification('Authentication Error: Please login again', 'error');
+            }
+
+            const config = { headers: { 'x-auth-token': token } };
 
             // 1. Create Razorpay order on server
+            console.log('1. Contacting Backend to create Razorpay Order...');
             const { data: rzpOrder } = await axios.post(`${API_URL}/api/orders/${orderId}/create-pay-order`, {}, config);
+            console.log('Order Created Successfully:', rzpOrder);
 
             // 2. Open Razorpay Checkout
+            console.log('2. Preparing Razorpay Options...');
             const options = {
                 key: RAZORPAY_KEY_ID,
                 amount: rzpOrder.amount,
@@ -113,7 +126,7 @@ const UserDashboard = () => {
                 description: "Laundry Service Payment",
                 order_id: rzpOrder.id,
                 handler: async function (response) {
-                    // 3. Verify payment on server
+                    console.log('3. Payment Received by Razorpay, verifying with server...');
                     try {
                         const verifyBody = {
                             razorpay_order_id: response.razorpay_order_id,
@@ -123,13 +136,15 @@ const UserDashboard = () => {
                         const { data: verifyData } = await axios.post(`${API_URL}/api/orders/${orderId}/verify-payment`, verifyBody, config);
 
                         if (verifyData.status === 'success') {
+                            console.log('Payment Verified Successfully!');
                             addNotification('Payment Successful!', 'success');
                             fetchOrders();
                         } else {
+                            console.error('Verification Failed:', verifyData);
                             addNotification('Payment Verification Failed', 'error');
                         }
                     } catch (err) {
-                        console.error(err);
+                        console.error('Verification Error:', err.response?.data || err.message);
                         addNotification('Error verifying payment', 'error');
                     }
                 },
@@ -143,15 +158,27 @@ const UserDashboard = () => {
                 }
             };
 
+            if (!window.Razorpay) {
+                console.error('CRITICAL: Razorpay SDK not found in window object!');
+                return addNotification('Error: Payment System (Razorpay) failed to load. Please refresh the page.', 'error');
+            }
+
+            console.log('4. Opening Razorpay Modal...');
             const rzp = new window.Razorpay(options);
             rzp.on('payment.failed', function (response) {
+                console.error('Payment Failed Event:', response.error);
                 addNotification(`Payment Failed: ${response.error.description}`, 'error');
             });
             rzp.open();
 
         } catch (err) {
-            console.error(err);
-            addNotification('Payment Initialization Failed', 'error');
+            console.error('--- Payment Initialization Failed ---');
+            console.error('Full Error Object:', err);
+            console.error('Server Response Data:', err.response?.data);
+            console.error('Status Code:', err.response?.status);
+            
+            const errorMsg = err.response?.data?.msg || err.message;
+            addNotification(`Payment Failed: ${errorMsg}`, 'error');
         }
     };
 

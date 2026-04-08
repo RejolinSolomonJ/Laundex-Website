@@ -65,17 +65,19 @@ export const AuthProvider = ({ children }) => {
                 // Check if token is expired (basic check)
                 const token = localStorage.token;
                 try {
-                    const payload = JSON.parse(atob(token.split('.')[1]));
-                    const isExpired = payload.exp * 1000 < Date.now();
+                    const tokenParts = token.split('.');
+                    if (tokenParts.length === 3) {
+                        const payload = JSON.parse(atob(tokenParts[1]));
+                        const isExpired = payload.exp * 1000 < Date.now();
 
-                    if (isExpired) {
-                        console.log('Token expired, logging out...');
-                        logout();
-                        return;
+                        if (isExpired) {
+                            console.log('Token expired, logging out...');
+                            logout();
+                            return;
+                        }
                     }
                 } catch (e) {
                     console.error('Error decoding token:', e);
-                    // If token is invalid, let the backend reject it or just logout
                 }
 
                 const user = JSON.parse(localStorage.getItem('user'));

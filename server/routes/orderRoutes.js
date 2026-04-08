@@ -61,21 +61,36 @@ router.post('/', auth, async (req, res) => {
 
 // Create Razorpay Order
 router.post('/:id/create-pay-order', auth, async (req, res) => {
+    console.log('--- Order Creation Request ---');
+    console.log('Order ID:', req.params.id);
+    
     try {
         const order = await Order.findById(req.params.id);
-        if (!order) return res.status(404).json({ msg: 'Order not found' });
+        if (!order) {
+            console.error('Error: Order not found in database');
+            return res.status(404).json({ msg: 'Order not found' });
+        }
+
+        console.log('Order Amount:', order.totalAmount);
+
+        if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+            console.error('Error: Razorpay Keys are missing from .env!');
+            return res.status(500).json({ msg: 'Server Configuration Error: Razorpay keys missing' });
+        }
 
         const options = {
-            amount: order.totalAmount * 100, // amount in the smallest currency unit (paise)
+            amount: Math.round(order.totalAmount * 100), // Ensure it's an integer
             currency: "INR",
             receipt: `receipt_order_${order._id}`,
         };
 
+        console.log('Creating Razorpay order with options:', options);
         const rzpOrder = await razorpay.orders.create(options);
+        console.log('Razorpay Order Created Successfully:', rzpOrder.id);
         res.json(rzpOrder);
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Error creating Razorpay order');
+        console.error('RAZORPAY ERROR:', err);
+        res.status(500).json({ msg: 'Error creating Razorpay order', error: err.message });
     }
 });
 

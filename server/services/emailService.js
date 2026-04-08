@@ -1,28 +1,30 @@
-const { Resend } = require('resend');
-
-// Initialize Resend with API Key from Environment
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
 
 const sendEmail = async (to, subject, text, html) => {
     try {
-        const { data, error } = await resend.emails.send({
-            from: 'Laundex <noreply@laundex.in>', // Verified Domain
-            to: [to],
-            subject: subject,
-            text: text, // Plain text version
-            html: html, // HTML version
+        const transporter = nodemailer.createTransport({
+            service: process.env.SMTP_SERVICE || 'gmail',
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+            },
         });
 
-        if (error) {
-            console.error('Resend API Error:', error);
-            throw error;
-        }
+        const mailOptions = {
+            from: process.env.SMTP_FROM || 'Laundex <no-reply@laundex.in>',
+            to,
+            subject,
+            text,
+            html,
+        };
 
-        console.log('Resend Email Sent:', data);
-        return data;
+        const result = await transporter.sendMail(mailOptions);
+        console.log('Email Sent Successfully:', result.messageId);
+        return result;
     } catch (error) {
-        console.error('Error sending email with Resend:', error);
-        throw error;
+        console.error('Error sending email:', error);
+        // Don't crash the server if email fails
+        return null;
     }
 };
 
