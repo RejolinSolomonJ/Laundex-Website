@@ -12,11 +12,17 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false
+    },
+    googleId: {
+        type: String
+    },
+    avatar: {
+        type: String
     },
     phone: {
         type: String,
-        required: true
+        required: false
     },
     role: {
         type: String,

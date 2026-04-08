@@ -1,0 +1,21 @@
+# node_modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Database
+mongo_data/
+
+# Environment variables
+.env
+client/.env
+server/.env
+*.local
+
+# Build directories
+dist/
+client/dist/
+
+# System files
+.DS_Store
+Thumbs.db

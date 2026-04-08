@@ -16,11 +16,13 @@ const UserDashboard = () => {
     const { theme, toggleTheme } = useTheme();
     const [orders, setOrders] = useState([]);
     const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [selectedService, setSelectedService] = useState(null);
     const [bookingData, setBookingData] = useState({
         pickupDate: '',
         address: user?.address || ''
     });
+    const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState('services');
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
@@ -45,11 +47,16 @@ const UserDashboard = () => {
     }, []);
 
     const fetchServices = async () => {
+        setLoading(true);
         try {
             const res = await axios.get(`${API_URL}/api/services`);
             setServices(res.data);
+            setError(null);
         } catch (err) {
-            console.error(err);
+            console.error('Fetch error:', err);
+            setError(`Failed to load services from ${API_URL}. Please check your connection.`);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -292,6 +299,28 @@ const UserDashboard = () => {
                             </div>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {loading && (
+                                    <div className="col-span-full text-center py-20">
+                                        <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
+                                        <p className="mt-4 text-blue-600 font-bold animate-pulse">Loading Services...</p>
+                                    </div>
+                                )}
+                                {error && !loading && (
+                                    <div className="col-span-full text-center py-12 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-100 dark:border-red-900">
+                                        <p className="text-red-600 dark:text-red-400 font-bold mb-2">{error}</p>
+                                        <button
+                                            onClick={fetchServices}
+                                            className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-bold hover:bg-red-700 transition"
+                                        >
+                                            Retry
+                                        </button>
+                                    </div>
+                                )}
+                                {!error && filteredServices.length === 0 && (
+                                    <div className="col-span-full text-center py-12">
+                                        <p className="text-gray-500 dark:text-gray-400">No services found.</p>
+                                    </div>
+                                )}
                                 {filteredServices.map(service => (
                                     <div key={service._id} className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 group">
                                         <div className="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
