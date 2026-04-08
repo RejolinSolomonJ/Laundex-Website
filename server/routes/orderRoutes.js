@@ -4,7 +4,15 @@ const Order = require('../models/Order');
 const Service = require('../models/Service');
 const auth = require('../middleware/authMiddleware');
 const sendEmail = require('../services/emailService');
-const User = require('../models/User'); // Ensure User model is imported for phone number lookup
+const User = require('../models/User');
+const Razorpay = require('razorpay');
+const crypto = require('crypto');
+
+// Initialize Razorpay
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 // Create Order (User)
 router.post('/', auth, async (req, res) => {
@@ -51,6 +59,55 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
+// Create Razorpay Order
+router.post('/:id/create-pay-order', auth, async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (!order) return res.status(404).json({ msg: 'Order not found' });
+
+        const options = {
+            amount: order.totalAmount * 100, // amount in the smallest currency unit (paise)
+            currency: "INR",
+            receipt: `receipt_order_${order._id}`,
+        };
+
+        const rzpOrder = await razorpay.orders.create(options);
+        res.json(rzpOrder);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error creating Razorpay order');
+    }
+});
+
+// Verify Payment
+router.post('/:id/verify-payment', auth, async (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    try {
+        const body = razorpay_order_id + "|" + razorpay_payment_id;
+        const expectedSignature = crypto
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+            .update(body.toString())
+            .digest("hex");
+
+        if (expectedSignature === razorpay_signature) {
+            const order = await Order.findById(req.params.id);
+            if (!order) return res.status(404).json({ msg: 'Order not found' });
+
+            order.paymentStatus = 'paid';
+            order.paymentId = razorpay_payment_id;
+            await order.save();
+
+            res.json({ status: 'success', order });
+        } else {
+            res.status(400).json({ status: 'failure', msg: 'Invalid signature' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
 // Get My Orders (User)
 router.get('/my-orders', auth, async (req, res) => {
     try {
@@ -65,7 +122,6 @@ router.get('/my-orders', auth, async (req, res) => {
 // Get Assigned Orders (Worker)
 router.get('/assigned', auth, async (req, res) => {
     try {
-        // Show all orders for now to demonstrate functionality
         const allOrders = await Order.find().populate('service').populate('user', 'name address phone').sort({ createdAt: -1 });
         res.json(allOrders);
     } catch (err) {
@@ -84,15 +140,12 @@ router.put('/:id/status', auth, async (req, res) => {
         order.status = status;
         await order.save();
 
-        // Emit event
         const io = req.app.get('io');
         io.emit('orderStatusUpdated', { orderId: order._id, status, user: order.user });
 
-        // Send Notifications
         try {
             const user = await User.findById(order.user);
             if (user) {
-                // Email Notification
                 await sendEmail(
                     user.email,
                     'Order Status Update - Laundex',
@@ -111,15 +164,14 @@ router.put('/:id/status', auth, async (req, res) => {
     }
 });
 
-// Process Payment (Mock)
+// Process Payment (Old Mock - kept for compatibility if needed, but recommended to use verify-payment)
 router.post('/:id/pay', auth, async (req, res) => {
     try {
         let order = await Order.findById(req.params.id);
         if (!order) return res.status(404).json({ msg: 'Order not found' });
 
-        // Mock Payment Processing
         order.paymentStatus = 'paid';
-        order.paymentId = `PAY_${Date.now()}`; // Mock ID
+        order.paymentId = `PAY_${Date.now()}`; 
         await order.save();
 
         res.json(order);
@@ -130,3 +182,4 @@ router.post('/:id/pay', auth, async (req, res) => {
 });
 
 module.exports = router;
+

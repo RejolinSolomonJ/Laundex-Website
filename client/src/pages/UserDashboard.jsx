@@ -8,7 +8,7 @@ import {
     Sun, Moon, LogOut, Package, ShoppingBasket, Shirt, Zap, Sparkles,
     Calendar, MapPin, CheckCircle, Search, X, Star, Menu
 } from 'lucide-react';
-import API_URL from '../config';
+import API_URL, { RAZORPAY_KEY_ID } from '../config';
 
 const UserDashboard = () => {
     const { user, logout } = useContext(AuthContext);
@@ -93,12 +93,58 @@ const UserDashboard = () => {
     const handlePayment = async (orderId) => {
         try {
             const config = { headers: { 'x-auth-token': localStorage.getItem('token') } };
-            await axios.post(`${API_URL}/api/orders/${orderId}/pay`, {}, config);
-            addNotification('Payment Successful!', 'success');
-            fetchOrders();
+
+            // 1. Create Razorpay order on server
+            const { data: rzpOrder } = await axios.post(`${API_URL}/api/orders/${orderId}/create-pay-order`, {}, config);
+
+            // 2. Open Razorpay Checkout
+            const options = {
+                key: RAZORPAY_KEY_ID,
+                amount: rzpOrder.amount,
+                currency: rzpOrder.currency,
+                name: "Laundex",
+                description: "Laundry Service Payment",
+                order_id: rzpOrder.id,
+                handler: async function (response) {
+                    // 3. Verify payment on server
+                    try {
+                        const verifyBody = {
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature
+                        };
+                        const { data: verifyData } = await axios.post(`${API_URL}/api/orders/${orderId}/verify-payment`, verifyBody, config);
+
+                        if (verifyData.status === 'success') {
+                            addNotification('Payment Successful!', 'success');
+                            fetchOrders();
+                        } else {
+                            addNotification('Payment Verification Failed', 'error');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        addNotification('Error verifying payment', 'error');
+                    }
+                },
+                prefill: {
+                    name: user?.name,
+                    email: user?.email,
+                    contact: user?.phone
+                },
+                theme: {
+                    color: "#2563eb"
+                }
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.on('payment.failed', function (response) {
+                addNotification(`Payment Failed: ${response.error.description}`, 'error');
+            });
+            rzp.open();
+
         } catch (err) {
             console.error(err);
-            addNotification('Payment Failed', 'error');
+            addNotification('Payment Initialization Failed', 'error');
         }
     };
 
