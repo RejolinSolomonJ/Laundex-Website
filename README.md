@@ -1,6 +1,8 @@
 # Laundex - Smart Laundry Management Web App
 
-A modern, tech-driven laundry management platform with dedicated dashboards for **Users**, **Workers**, and **Admins**, enabling seamless order handling, service tracking, payment management, and workflow automation.
+Laundex is a modern, tech-driven laundry management platform that simplifies the entire laundry process through a seamless digital experience. The platform connects customers with professional laundry service providers while enabling efficient order management, workforce coordination, real-time tracking, secure payments, and automated scheduling.
+
+The application provides dedicated dashboards for **Customers**, **Workers**, and **Administrators**, ensuring smooth workflow management from order placement to final delivery.
 
 ---
 
@@ -8,158 +10,485 @@ A modern, tech-driven laundry management platform with dedicated dashboards for 
 
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
-![Built With](https://img.shields.io/badge/Built%20With-React%20%7C%20Node.js%20%7C%20MongoDB-blue)
+![React](https://img.shields.io/badge/Frontend-React-blue)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-green)
+![MongoDB](https://img.shields.io/badge/Database-MongoDB-success)
 
 ---
 
-## Features
+# Features
 
-### User Features
+## Customer
 
-- Create laundry orders with pickup and delivery
-- Secure online payments
-- Track order status in real time
-- View order history
-- Secure authentication using JWT
-
-### Worker Features
-
-- View assigned orders
-- Accept and process laundry requests
-- Update washing, drying, ironing, and delivery status
-- Manage order timelines efficiently
-
-### Admin Features
-
-- Manage users and workers
-- Manage service categories
-- Assign orders to workers
-- Monitor analytics and reports
-- Configure pricing and workflow
+- User Registration & Login
+- JWT Authentication
+- Book Laundry Orders
+- Pickup & Delivery Scheduling
+- Order Tracking
+- Online Payment
+- View Order History
+- Profile Management
 
 ---
 
-## Tech Stack
+## Worker
 
-### Frontend
+- Worker Login
+- View Assigned Orders
+- Accept Orders
+- Update Washing Status
+- Update Drying Status
+- Update Ironing Status
+- Update Delivery Status
+- View Completed Orders
+
+---
+
+## Admin
+
+- Dashboard
+- Manage Customers
+- Manage Workers
+- Manage Laundry Services
+- Assign Orders
+- Manage Pricing
+- Monitor Payments
+- View Reports
+- Analytics Dashboard
+
+---
+
+# Tech Stack
+
+## Frontend
 
 - React.js
 - Tailwind CSS
-- React Router
+- React Router DOM
 - Axios
 
-### Backend
+## Backend
 
 - Node.js
 - Express.js
-- MongoDB Atlas
 - JWT Authentication
+- bcrypt.js
+- Multer
 
-### Hosting
+## Database
 
-- Frontend: Vercel
-- Backend: Render
-- Database: MongoDB Atlas
+- MongoDB Atlas
+- Mongoose ODM
+
+## Hosting
+
+- Frontend : Vercel
+- Backend : Render
+- Database : MongoDB Atlas
 
 ---
 
-## Installation
+# System Architecture
 
-### 1. Clone the Repository
+```
+                          +--------------------------------+
+                          |          Customers             |
+                          |            Workers             |
+                          |             Admin              |
+                          +---------------+----------------+
+                                          |
+                                          |
+                                   HTTPS Requests
+                                          |
+                                          ▼
++---------------------------------------------------------------+
+|                    React.js Frontend                          |
+|---------------------------------------------------------------|
+| Customer Dashboard                                            |
+| Worker Dashboard                                              |
+| Admin Dashboard                                               |
+| Authentication                                                |
+| Order Management UI                                           |
+| Payment Interface                                             |
++-----------------------------+---------------------------------+
+                              |
+                         REST API (Axios)
+                              |
+                              ▼
++---------------------------------------------------------------+
+|                 Node.js + Express.js Backend                  |
+|---------------------------------------------------------------|
+| Authentication (JWT)                                          |
+| User Management                                               |
+| Worker Management                                             |
+| Order Management                                              |
+| Pickup Scheduling                                             |
+| Delivery Scheduling                                           |
+| Payment Processing                                            |
+| Notifications                                                 |
+| Admin Controller                                              |
++-----------------------------+---------------------------------+
+                              |
+                           Mongoose
+                              |
+                              ▼
++---------------------------------------------------------------+
+|                    MongoDB Atlas Database                     |
+|---------------------------------------------------------------|
+| Users Collection                                              |
+| Workers Collection                                            |
+| Orders Collection                                             |
+| Services Collection                                           |
+| Payments Collection                                           |
+| Notifications Collection                                      |
++-----------------------------+---------------------------------+
+                              |
+                              ▼
++---------------------------------------------------------------+
+|                  Third Party Integrations                     |
+|---------------------------------------------------------------|
+| Razorpay / Easebuzz                                           |
+| Email Service                                                 |
+| SMS Service                                                   |
+| Google Maps API                                               |
++---------------------------------------------------------------+
+```
+
+---
+
+# Architecture Workflow
+
+### Step 1
+
+Customers access the Laundex web application through a browser.
+
+### Step 2
+
+Users authenticate using JWT-based login.
+
+### Step 3
+
+Customers create laundry orders by selecting services, pickup date, and delivery preferences.
+
+### Step 4
+
+The backend validates the request and stores the order in MongoDB Atlas.
+
+### Step 5
+
+The admin assigns the order to an available worker.
+
+### Step 6
+
+Workers update the order progress through different stages:
+
+- Order Accepted
+- Pickup Completed
+- Washing
+- Drying
+- Ironing
+- Ready for Delivery
+- Delivered
+
+### Step 7
+
+Customers receive live order updates.
+
+### Step 8
+
+Payments are processed securely using an integrated payment gateway.
+
+### Step 9
+
+Administrators monitor analytics and generate reports.
+
+---
+
+# Project Structure
+
+```
+Laundex-Website/
+
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │
+│   ├── assets/
+│   ├── components/
+│   ├── context/
+│   ├── layouts/
+│   ├── pages/
+│   │      ├── Customer/
+│   │      ├── Worker/
+│   │      └── Admin/
+│   │
+│   ├── services/
+│   ├── utils/
+│   ├── App.jsx
+│   └── main.jsx
+│
+├── backend/
+│
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── uploads/
+│   ├── utils/
+│   ├── server.js
+│   └── package.json
+│
+├── README.md
+└── package.json
+```
+
+---
+
+# Installation
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/RejolinSolomonJ/Laundex-Website.git
+```
+
+```
 cd Laundex-Website
 ```
 
-### 2. Install Dependencies
+---
 
-```bash
+## Install Frontend
+
+```
+cd frontend
 npm install
 ```
 
-### 3. Configure Environment Variables
+---
 
-Create a `.env` file inside the backend directory.
+## Install Backend
 
-```env
-MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_secret_key
-CLIENT_URL=https://www.laundex.in
+```
+cd backend
+npm install
 ```
 
-### 4. Start the Development Server
+---
 
-```bash
+## Environment Variables
+
+Create a `.env` file inside the backend folder.
+
+```
+PORT=5000
+
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_secret_key
+
+CLIENT_URL=http://localhost:5173
+```
+
+---
+
+## Start Backend
+
+```
+npm run server
+```
+
+---
+
+## Start Frontend
+
+```
 npm run dev
 ```
 
 ---
 
-## Project Structure
+# Database Collections
 
-```
-Laundex-Website/
-│
-├── public/
-├── src/
-│   ├── components/
-│   ├── context/
-│   ├── pages/
-│   ├── services/
-│   └── utils/
-│
-├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── server.js
-│   └── .env
-│
-├── package.json
-└── README.md
-```
+### Users
+
+- Name
+- Email
+- Password
+- Phone
+- Address
 
 ---
 
-## Live Demo
+### Workers
 
-https://www.laundex.in/
+- Name
+- Email
+- Phone
+- Assigned Orders
+- Status
 
 ---
 
-## Contributing
+### Orders
 
-Contributions, feature requests, and issue reports are welcome.
+- Order ID
+- Customer
+- Services
+- Pickup Date
+- Delivery Date
+- Status
+- Total Amount
+
+---
+
+### Payments
+
+- Payment ID
+- Order ID
+- Amount
+- Method
+- Payment Status
+
+---
+
+### Notifications
+
+- Notification ID
+- User ID
+- Message
+- Date
+
+---
+
+# API Modules
+
+## Authentication
+
+- Register
+- Login
+- Logout
+- Forgot Password
+
+---
+
+## Customer
+
+- Create Order
+- Track Order
+- Payment
+- Order History
+
+---
+
+## Worker
+
+- Accept Order
+- Update Status
+- Complete Delivery
+
+---
+
+## Admin
+
+- Manage Users
+- Manage Workers
+- Manage Services
+- Assign Orders
+- Reports
+- Analytics
+
+---
+
+# Security
+
+- JWT Authentication
+- Password Hashing using bcrypt
+- Protected Routes
+- Input Validation
+- MongoDB Injection Protection
+- CORS Enabled
+
+---
+
+# Future Enhancements
+
+- AI-based Pickup Route Optimization
+- Laundry Subscription Plans
+- Mobile Application
+- QR Code Order Tracking
+- WhatsApp Notifications
+- Voice Assistant
+- Customer Loyalty Program
+- Machine Learning Demand Prediction
+
+---
+
+# Live Demo
+
+https://www.laundex.in
+
+---
+
+# Contributing
+
+Contributions are welcome.
 
 1. Fork the repository.
-2. Create a new feature branch.
-3. Commit your changes.
-4. Push to your branch.
-5. Open a Pull Request.
+
+2. Create a feature branch.
+
+```
+git checkout -b feature-name
+```
+
+3. Commit changes.
+
+```
+git commit -m "Added feature"
+```
+
+4. Push to GitHub.
+
+```
+git push origin feature-name
+```
+
+5. Create a Pull Request.
 
 ---
 
-## License
+# License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the MIT License.
 
 ---
 
-## Developer
+# Developer
 
-**Rejolin Solomon J**
+## Rejolin Solomon J
 
-Founder & CEO – Lin's Infotechs
+Founder & CEO — Lin's Infotechs
 
 - Full Stack Developer
 - AI Solutions Developer
 - Google Developer Groups (GDG) Organizer
-- Student Convenor – Institution's Innovation Council (IIC)
+- Student Convenor — Institution's Innovation Council (IIC)
 
-**Website:** https://www.laundex.in
+### GitHub
 
-**GitHub:** https://github.com/RejolinSolomonJ
+https://github.com/RejolinSolomonJ
 
-**LinkedIn:** https://www.linkedin.com/in/rejolinsolomonj
+### Website
+
+https://www.laundex.in
+
+### LinkedIn
+
+https://www.linkedin.com/in/rejolinsolomonj
+
+---
+
+© 2026 Laundex. All Rights Reserved.
